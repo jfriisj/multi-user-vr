@@ -11,31 +11,6 @@
       "command": "npx",
       "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "."],
       "cwd": "${workspaceFolder}"
-    },
-    "multi-language-linter": {
-      "command": "docker",
-      "args": [
-        "run",
-        "--rm",
-        "-i",
-        "--name", "mcp-linter",
-        "-v", "${workspaceFolder}:/workspace",
-        "-v", "${workspaceFolder}/.lint-config:/config",
-        "ghcr.io/jfriisjw/multi-language-linter:latest",
-        "--stdin"
-      ],
-      "env": {
-        "ENABLE_PYTHON": "true",
-        "ENABLE_JAVASCRIPT": "true",
-        "ENABLE_TYPESCRIPT": "true",
-        "ENABLE_GO": "true",
-        "ENABLE_RUST": "true",
-        "ENABLE_SHELL": "true",
-        "ENABLE_DOCKER": "true",
-        "ENABLE_MARKDOWN": "true",
-        "ENABLE_YAML": "true",
-        "ENABLE_JSON": "true"
-      }
     }
   }
 }
