@@ -1,0 +1,16 @@
+{
+  "servers": {
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
+    },
+    "spec-workflow": {
+      "command": "npx",
+      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "."],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}

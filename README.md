@@ -1,166 +1,163 @@
 # Co-located Multi-user VR System
 
-An affordable VR system that enables multiple users to share the same physical room while collaborating in a virtual environment, addressing the unique challenges of co-located VR experiences.
+An affordable VR system that enables multiple users to share the same physical room while collaborating in a virtual environment using Meta Quest 3 headsets.
 
-## 🎯 Project Overview
-
-### Case Description Enterprise
+## Overview
 
 VR rooms are transforming physical spaces into shared multi-user VR environments where teams can train together, with companies like Virtualware deploying over 32 VIROO Rooms worldwide for industries from railways to military training. However, most solutions require expensive custom installations. 
 
-This project aims to develop an affordable VR system that enables multiple users to share the same physical room while collaborating in a virtual environment. Unlike typical multi-user VR platforms where users connect from different locations, this system addresses the unique challenges of co-located users. 
+This project develops an affordable alternative that addresses the unique challenges of co-located users - unlike typical multi-user VR platforms where users connect from different locations, this system focuses on users sharing the same physical space.
 
-**Target Customers:**
-- Training facilities
-- Educational labs
-- Team-building venues
-- Organizations seeking shared-space VR experiences
+## Project Goals
 
-### The Challenge
+- Create a stable multi-user VR system supporting 3 users in the same physical room
+- Leverage Meta Quest 3's native shared space capabilities for co-located VR
+- Implement safety measures to prevent collisions between users
+- Develop synchronized virtual environments with proper avatar alignment
+- Identify target customers in training facilities, educational labs, and team-building venues
 
-The main challenge is creating a stable multi-user VR system where **3 users can operate in the same physical room**. While controllers are paired to individual headsets so there's no signal mixing, we must investigate whether Meta Quest 3's inside-out tracking handles multiple headsets in close proximity without interference.
+## Technical Challenge
 
-**Key Technical Challenges:**
-- Managing shared physical boundaries
-- Preventing collisions between users who can't see each other
-- Ensuring virtual avatars properly align with users' actual positions
-- Implementing basic networking to synchronize the virtual environment
-- Maintaining awareness of real-world space constraints
-- Identifying use cases that benefit from physical co-location vs. remote connection
+The main technical challenges include:
 
-## 🔧 Technology Stack
+### Multi-headset Coordination
+- Utilizing Meta Quest's built-in shared space feature for multiple headsets
+- Managing shared physical boundaries and guardian systems
+- Ensuring proper spatial alignment between virtual avatars and real user positions
 
-- **Platform:** Meta Quest 3 (3 devices)
-- **Game Engine:** Unity
-- **Programming Language:** C#
-- **Networking:** Unity's Netcode for GameObjects
-- **VR Framework:** XR Interaction Toolkit or OpenXR
-- **Version Control:** GitHub
+### Safety & Collision Prevention
+- Implementing collision avoidance for users who can't see each other in VR
+- Managing shared physical space constraints
+- Real-time awareness of other users' positions
 
-## 🚀 Getting Started
+### Networking & Synchronization
+- Synchronizing virtual environments across multiple headsets
+- Real-time avatar positioning and movement
+- Shared object interactions and state management
+
+## Technology Stack
+
+### Development Environment
+- **Unity 2022.3+ LTS** - Primary development platform
+- **C#** - Programming language
+- **Meta Quest 3** - Target VR hardware (3 devices provided)
+
+### VR Frameworks
+- **Meta XR SDK** - Native Quest development support
+- **XR Interaction Toolkit** or **OpenXR** - VR interaction systems
+- **Meta Quest Shared Space API** - Multi-user co-location features
+
+### Networking
+- **Unity Netcode for GameObjects** - Networking solution
+- **Meta Quest Platform SDK** - Social features and user management
+
+### Version Control
+- **GitHub** - Code management and collaboration
+- Regular demonstrations throughout development
+
+## Meta Quest Shared Space Integration
+
+This project leverages Meta Quest's native shared space capabilities:
+
+- **Automatic Space Sharing** - Quest headsets can automatically detect and share the same physical space
+- **Multi-user Guardian** - Shared boundary system for multiple users
+- **Spatial Anchors** - Persistent virtual object placement across sessions
+- **User Awareness** - Visual indicators of other users' positions and boundaries
+
+## Target Use Cases
+
+### Training Facilities
+- Corporate team training scenarios
+- Safety procedure rehearsals
+- Equipment operation training
+
+### Educational Institutions
+- Collaborative learning experiences
+- Science and engineering labs
+- Group problem-solving activities
+
+### Team Building Venues
+- Corporate retreats and workshops
+- Interactive team exercises
+- Communication skill development
+
+## Getting Started
 
 ### Prerequisites
+- Unity 2022.3 LTS or newer
+- Meta Quest Developer account
+- 3x Meta Quest 3 headsets
+- Shared physical space (minimum 3x3 meters recommended)
 
-- Unity 2022.3+ LTS
-- Meta Quest 3 headsets (3 units)
-- Development PC with VR capabilities
-- Git for version control
+### Initial Setup
+1. Clone this repository
+2. Open project in Unity
+3. Install Meta XR SDK via Package Manager
+4. Configure build settings for Android/Quest platform
+5. Set up developer mode on Quest headsets
 
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/[username]/co-located-vr-system.git
-cd co-located-vr-system
+### Project Structure
+```
+├── Assets/
+│   ├── Scripts/           # C# scripts for VR interactions
+│   ├── Prefabs/          # Reusable game objects
+│   ├── Scenes/           # Unity scenes
+│   ├── Materials/        # Visual materials and textures
+│   └── Networking/       # Network-related components
+├── Documentation/        # Technical documentation
+├── Tests/               # Unit and integration tests
+└── README.md
 ```
 
-2. Open the project in Unity Hub
+## Development Milestones
 
-3. Install required packages:
-   - XR Interaction Toolkit
-   - Netcode for GameObjects
-   - Meta XR SDK (if using Meta-specific features)
+### Phase 1: Foundation
+- [ ] Unity project setup with Meta XR SDK
+- [ ] Basic VR scene with Quest 3 support
+- [ ] Shared space detection implementation
 
-4. Configure build settings for Android (Meta Quest 3)
+### Phase 2: Multi-user Core
+- [ ] Multiple headset tracking validation
+- [ ] Basic networking with Netcode for GameObjects
+- [ ] Avatar synchronization system
 
-## 📁 Project Structure
+### Phase 3: Safety & UX
+- [ ] Collision prevention system
+- [ ] Shared guardian boundary management
+- [ ] User awareness indicators
 
-```
-Assets/
-├── Scripts/
-│   ├── Networking/
-│   ├── VR/
-│   └── Utils/
-├── Prefabs/
-│   ├── Player/
-│   ├── Environment/
-│   └── UI/
-├── Scenes/
-├── Materials/
-├── Audio/
-└── Documentation/
-```
+### Phase 4: Applications
+- [ ] Training scenario prototypes
+- [ ] Educational use case development
+- [ ] Performance optimization
 
-## 🎮 Features
+## Safety Considerations
 
-- [ ] **Multi-headset Tracking**: Investigation and implementation of interference-free tracking
-- [ ] **Collision Prevention**: Safety systems to prevent physical collisions
-- [ ] **Avatar Synchronization**: Real-time avatar positioning and movement sync
-- [ ] **Shared Boundaries**: Management of physical room constraints
-- [ ] **Network Architecture**: Stable multi-user networking solution
-- [ ] **Safety Protocols**: User safety in shared physical space
+- **Physical Space Management** - Ensure adequate room size for 3 users
+- **Collision Prevention** - Real-time user position awareness
+- **Emergency Protocols** - Quick VR exit procedures
+- **Guardian Boundaries** - Properly configured shared boundaries
 
-## 🧪 Research Areas
+## Contributing
 
-### Tracking Interference Investigation
-- Test Meta Quest 3's inside-out tracking with multiple headsets
-- Document any signal interference or tracking degradation
-- Develop mitigation strategies if issues are found
+1. Fork the repository
+2. Create feature branches for new development
+3. Follow C# coding standards
+4. Test with multiple Quest headsets when possible
+5. Document changes and submit pull requests
 
-### Use Case Analysis
-- Identify scenarios where co-location provides advantages over remote VR
-- Document training applications and educational use cases
-- Analyze cost-benefit compared to existing solutions
+## Keywords
 
-## 📊 Development Milestones
+Virtual Reality, Co-located VR, Shared Physical Space, Multi-user Systems, Unity, Meta Quest 3, Shared Space, XR Development
 
-1. **Phase 1: Setup & Research**
-   - Unity project initialization
-   - Tracking interference testing
-   - Basic networking setup
+## License
 
-2. **Phase 2: Core Implementation**
-   - Multi-user synchronization
-   - Collision prevention system
-   - Avatar alignment
+[Add your license information here]
 
-3. **Phase 3: Testing & Optimization**
-   - Multi-headset testing
-   - Performance optimization
-   - Safety validation
+## Contact
 
-4. **Phase 4: Documentation & Demos**
-   - Use case documentation
-   - Demo preparation
-   - Final presentation
-
-## 🔍 Keywords
-
-Virtual Reality, Co-located VR, Shared Physical Space, Multi-user Systems, Unity, Meta Quest 3, Inside-out Tracking, Netcode for GameObjects, XR Interaction Toolkit
-
-## 🤝 Contributing
-
-This is an educational project developed as part of [Course/Program Name]. Contributions should follow the established development workflow with regular demonstrations throughout the semester.
-
-### Development Workflow
-1. Create feature branches for new functionality
-2. Test with physical hardware when possible
-3. Document findings and decisions
-4. Regular code reviews and demonstrations
-
-## 📝 Documentation
-
-- [Technical Documentation](docs/technical.md)
-- [Testing Protocols](docs/testing.md)
-- [Safety Guidelines](docs/safety.md)
-- [Use Case Studies](docs/use-cases.md)
-
-## ⚠️ Safety Considerations
-
-When working with multiple users in the same physical space:
-- Establish clear physical boundaries
-- Implement guardian/boundary systems
-- Test collision prevention thoroughly
-- Maintain awareness of real-world obstacles
-
-## 📄 License
-
-[Add appropriate license for your project]
-
-## 📞 Contact
-
-[Your contact information or team details]
+[Add project contact information]
 
 ---
 
-**Note:** This project is part of an educational initiative to explore affordable alternatives to expensive commercial VR room solutions. All testing should prioritize user safety in shared physical environments.
+*This project focuses on affordable co-located VR solutions, distinguishing itself from remote multi-user VR platforms by addressing the unique challenges and opportunities of users sharing the same physical space.*
