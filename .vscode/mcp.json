@@ -11,6 +11,15 @@
       "command": "npx",
       "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "."],
       "cwd": "${workspaceFolder}"
+    },
+    "Unity-MCP": {
+      "type": "stdio",
+      "command": "C:/github/multi-user-vr/vr/Library/mcp-server/win-x64/unity-mcp-server.exe",
+      "args": [
+        "--port=8080",
+        "--plugin-timeout=10000",
+        "--client-transport=stdio"
+      ]
     }
   }
 }
