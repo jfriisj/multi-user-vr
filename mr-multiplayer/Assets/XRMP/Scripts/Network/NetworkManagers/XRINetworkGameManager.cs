@@ -23,6 +23,7 @@ namespace XRMultiplayer
 
     /// <summary>
     /// Manages the high level connection for a networked game session.
+    /// Supports both cloud-based (UGS Lobby/Relay) and LAN direct connections.
     /// </summary>
     [RequireComponent(typeof(LobbyManager)), RequireComponent(typeof(AuthenticationManager))]
     public class XRINetworkGameManager : NetworkBehaviour
@@ -154,10 +155,22 @@ namespace XRMultiplayer
         LobbyManager m_LobbyManager;
 
         /// <summary>
-        /// Lobby Manager handles the Lobby and Relay work between players.
+        /// Authentication Manager handles Unity Services authentication.
         /// </summary>
         public AuthenticationManager authenticationManager => m_AuthenticationManager;
         AuthenticationManager m_AuthenticationManager;
+
+        /// <summary>
+        /// Connection Mode Manager handles switching between Cloud and LAN modes.
+        /// </summary>
+        public ConnectionModeManager connectionModeManager => m_ConnectionModeManager;
+        ConnectionModeManager m_ConnectionModeManager;
+
+        /// <summary>
+        /// LAN Connection Manager handles direct IP-based connections.
+        /// </summary>
+        public LANConnectionManager lanConnectionManager => m_LANConnectionManager;
+        LANConnectionManager m_LANConnectionManager;
 
         /// <summary>
         /// List that handles all current players by ID.
@@ -204,33 +217,76 @@ namespace XRMultiplayer
                 return;
             }
 
+            // Find optional LAN connection components
+            m_ConnectionModeManager = FindFirstObjectByType<ConnectionModeManager>();
+            m_LANConnectionManager = FindFirstObjectByType<LANConnectionManager>();
+
+            if (m_LANConnectionManager != null)
+            {
+                // Subscribe to LAN connection events
+                m_LANConnectionManager.OnConnectionSuccess += OnLANConnectionSuccess;
+                m_LANConnectionManager.OnConnectionFailed += OnLANConnectionFailed;
+                m_LANConnectionManager.OnStatusChanged += OnLANStatusChanged;
+                Utils.Log($"{k_DebugPrepend}LANConnectionManager found and integrated.");
+            }
+            else
+            {
+                Utils.Log($"{k_DebugPrepend}LANConnectionManager not found. LAN Direct mode unavailable.");
+            }
+
+            if (m_ConnectionModeManager != null)
+            {
+                // Subscribe to connection mode events
+                m_ConnectionModeManager.OnModeChanged += OnConnectionModeChanged;
+                Utils.Log($"{k_DebugPrepend}ConnectionModeManager found and integrated.");
+            }
+            else
+            {
+                Utils.Log($"{k_DebugPrepend}ConnectionModeManager not found. Operating in Cloud-only mode.");
+            }
+
 #if UNITY_EDITOR
             if(!CloudProjectSettings.projectBound)
             {
                 Utils.Log($"{k_DebugPrepend}Project has not been linked to Unity Cloud." +
                                "\nThe VR Multiplayer Template utilizes Unity Gaming Services and must be linked to Unity Cloud." +
                                "\nGo to <b>Settings -> Project Settings -> Services</b> and link your project.", 2);
-                return;
+                // Don't return here - allow LAN mode to work without cloud
+                if (m_LANConnectionManager == null)
+                {
+                    return; // Only return if LAN is also unavailable
+                }
             }
 #endif
 
             // Initialize bindable variables.
             m_Connected.Value = false;
-            // Update connection state.
-            m_ConnectionState.Value = ConnectionState.Authenticating;
-
-            // Wait for Authentication to complete.
-            bool signedIn = await Authenticate();
-            if (!signedIn)
+            
+            // Only authenticate if cloud services are available or if LAN manager is not present
+            if (m_ConnectionModeManager == null || m_ConnectionModeManager.CurrentMode == ConnectionModeManager.ConnectionMode.Cloud)
             {
-                Utils.Log($"{k_DebugPrepend}Failed to Authenticate.", 1);
-                ConnectionFailed("Failed to Authenticate.");
-                PlayerHudNotification.Instance.ShowText($"Failed to Authenticate.");
+                // Update connection state.
+                m_ConnectionState.Value = ConnectionState.Authenticating;
+
+                // Wait for Authentication to complete.
+                bool signedIn = await Authenticate();
+                if (!signedIn)
+                {
+                    Utils.Log($"{k_DebugPrepend}Failed to Authenticate.", 1);
+                    ConnectionFailed("Failed to Authenticate.");
+                    PlayerHudNotification.Instance.ShowText($"Failed to Authenticate.");
+                }
+                else
+                {
+                    // Update connection state.
+                    m_ConnectionState.Value = ConnectionState.Authenticated;
+                }
             }
             else
             {
-                // Update connection state.
-                m_ConnectionState.Value = ConnectionState.Authenticated;
+                // In LAN mode, skip authentication
+                Utils.Log($"{k_DebugPrepend}Starting in LAN Direct mode, skipping cloud authentication.");
+                m_ConnectionState.Value = ConnectionState.Authenticated; // Mark as ready
             }
         }
 
@@ -248,6 +304,20 @@ namespace XRMultiplayer
         public override void OnDestroy()
         {
             base.OnDestroy();
+
+            // Unsubscribe from LAN connection events
+            if (m_LANConnectionManager != null)
+            {
+                m_LANConnectionManager.OnConnectionSuccess -= OnLANConnectionSuccess;
+                m_LANConnectionManager.OnConnectionFailed -= OnLANConnectionFailed;
+                m_LANConnectionManager.OnStatusChanged -= OnLANStatusChanged;
+            }
+
+            // Unsubscribe from connection mode events
+            if (m_ConnectionModeManager != null)
+            {
+                m_ConnectionModeManager.OnModeChanged -= OnConnectionModeChanged;
+            }
 
             ShutDown();
         }
@@ -272,8 +342,125 @@ namespace XRMultiplayer
             }
 
             // Shutdown lobby if owner, remove from lobby if not owner.
-            await m_LobbyManager.RemovePlayerFromLobby(AuthenicationId);
+            // Only do this if we're in cloud mode and have a lobby manager
+            if (m_LobbyManager != null && (m_ConnectionModeManager == null || m_ConnectionModeManager.CurrentMode == ConnectionModeManager.ConnectionMode.Cloud))
+            {
+                await m_LobbyManager.RemovePlayerFromLobby(AuthenicationId);
+            }
         }
+
+        #region LAN Connection Event Handlers
+
+        /// <summary>
+        /// Called when LAN connection succeeds.
+        /// </summary>
+        void OnLANConnectionSuccess()
+        {
+            Utils.Log($"{k_DebugPrepend}LAN connection established successfully.");
+            m_ConnectionState.Value = ConnectionState.Connected;
+            
+            // Set connected room name for LAN mode
+            if (m_LANConnectionManager.IsHosting)
+            {
+                ConnectedRoomName.Value = $"LAN Host ({m_LANConnectionManager.LocalIPAddress})";
+            }
+            else
+            {
+                ConnectedRoomName.Value = "LAN Client";
+            }
+        }
+
+        /// <summary>
+        /// Called when LAN connection fails.
+        /// </summary>
+        void OnLANConnectionFailed(string reason)
+        {
+            Utils.Log($"{k_DebugPrepend}LAN connection failed: {reason}", 1);
+            ConnectionFailed(reason);
+        }
+
+        /// <summary>
+        /// Called when LAN connection status changes.
+        /// </summary>
+        void OnLANStatusChanged(LANConnectionManager.LANConnectionStatus status)
+        {
+            Utils.Log($"{k_DebugPrepend}LAN status changed to: {status}");
+            
+            // Update connection state based on LAN status
+            switch (status)
+            {
+                case LANConnectionManager.LANConnectionStatus.Connecting:
+                    m_ConnectionState.Value = ConnectionState.Connecting;
+                    ConnectionUpdated("Connecting via LAN...");
+                    break;
+                
+                case LANConnectionManager.LANConnectionStatus.Connected:
+                    m_ConnectionState.Value = ConnectionState.Connected;
+                    ConnectionUpdated("Connected via LAN");
+                    break;
+                
+                case LANConnectionManager.LANConnectionStatus.Disconnected:
+                    m_ConnectionState.Value = ConnectionState.Authenticated;
+                    ConnectionUpdated("Disconnected from LAN");
+                    break;
+                
+                case LANConnectionManager.LANConnectionStatus.Failed:
+                case LANConnectionManager.LANConnectionStatus.Timeout:
+                    m_ConnectionState.Value = ConnectionState.Authenticated;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Called when connection mode changes between Cloud and LAN.
+        /// </summary>
+        void OnConnectionModeChanged(ConnectionModeManager.ConnectionMode mode)
+        {
+            Utils.Log($"{k_DebugPrepend}Connection mode changed to: {mode}");
+            
+            // Update connection state based on mode
+            if (mode == ConnectionModeManager.ConnectionMode.LANDirect)
+            {
+                // LAN mode doesn't require authentication
+                if (m_ConnectionState.Value == ConnectionState.None || m_ConnectionState.Value == ConnectionState.Authenticating)
+                {
+                    m_ConnectionState.Value = ConnectionState.Authenticated;
+                }
+            }
+            else if (mode == ConnectionModeManager.ConnectionMode.Cloud)
+            {
+                // Cloud mode requires authentication
+                if (!IsAuthenticated())
+                {
+                    m_ConnectionState.Value = ConnectionState.Authenticating;
+                    _ = Authenticate(); // Fire and forget
+                }
+            }
+        }
+
+        #endregion
+
+        #region Connection Mode Utilities
+
+        /// <summary>
+        /// Gets whether the current connection is using LAN mode.
+        /// </summary>
+        public bool IsLANMode()
+        {
+            return m_ConnectionModeManager != null && 
+                   m_ConnectionModeManager.CurrentMode == ConnectionModeManager.ConnectionMode.LANDirect;
+        }
+
+        /// <summary>
+        /// Gets whether the current connection is using Cloud mode.
+        /// </summary>
+        public bool IsCloudMode()
+        {
+            return m_ConnectionModeManager == null || 
+                   m_ConnectionModeManager.CurrentMode == ConnectionModeManager.ConnectionMode.Cloud;
+        }
+
+        #endregion
 
         public async Task<bool> Authenticate()
         {
@@ -291,7 +478,9 @@ namespace XRMultiplayer
         {
             LocalId = localPlayerId;
             m_Connected.Value = true;
-            PlayerHudNotification.Instance.ShowText($"<b>Status:</b> Connected");
+            
+            string connectionType = IsLANMode() ? "LAN" : "Cloud";
+            PlayerHudNotification.Instance.ShowText($"<b>Status:</b> Connected ({connectionType})");
         }
 
         /// <summary>
@@ -305,8 +494,10 @@ namespace XRMultiplayer
             m_Connected.Value = false;
             m_CurrentPlayerIDs.Clear();
             PlayerHudNotification.Instance.ShowText($"<b>Status:</b> Disconnected");
+            
             // Check if authenticated on disconnect.
-            if (IsAuthenticated())
+            // In LAN mode, always go back to Authenticated state
+            if (IsLANMode() || IsAuthenticated())
             {
                 m_ConnectionState.Value = ConnectionState.Authenticated;
             }
@@ -435,7 +626,16 @@ namespace XRMultiplayer
         public virtual void ConnectionFailed(string reason)
         {
             connectionFailedAction?.Invoke(reason);
-            m_ConnectionState.Value = AuthenticationManager.IsAuthenticated() ? ConnectionState.Authenticated : ConnectionState.None;
+            
+            // Handle state based on connection mode
+            if (IsLANMode())
+            {
+                m_ConnectionState.Value = ConnectionState.Authenticated;
+            }
+            else
+            {
+                m_ConnectionState.Value = AuthenticationManager.IsAuthenticated() ? ConnectionState.Authenticated : ConnectionState.None;
+            }
         }
 
         /// <summary>
@@ -449,9 +649,17 @@ namespace XRMultiplayer
 
         /// <summary>
         /// Joins a random lobby. If no lobbies exist, it will create a new one.
+        /// Cloud mode only.
         /// </summary>
         public virtual async void QuickJoinLobby()
         {
+            if (IsLANMode())
+            {
+                Utils.Log($"{k_DebugPrepend}QuickJoinLobby called in LAN mode. Use LANConnectionManager instead.", 1);
+                ConnectionFailed("Cannot use Quick Join in LAN Direct mode.");
+                return;
+            }
+            
             Utils.Log($"{k_DebugPrepend}Joining Lobby by Quick Join.");
             if (await AbleToConnect())
             {
@@ -461,10 +669,18 @@ namespace XRMultiplayer
 
         /// <summary>
         /// Called when trying to join a Lobby by Room Code.
+        /// Cloud mode only.
         /// </summary>
         /// <param name="lobby">Lobby to join.</param>
         public virtual async void JoinLobbyByCode(string code)
         {
+            if (IsLANMode())
+            {
+                Utils.Log($"{k_DebugPrepend}JoinLobbyByCode called in LAN mode. Use LANConnectionManager instead.", 1);
+                ConnectionFailed("Cannot join by room code in LAN Direct mode.");
+                return;
+            }
+            
             Utils.Log($"{k_DebugPrepend}Joining Lobby by room code: {code}.");
             if (await AbleToConnect())
             {
@@ -474,10 +690,18 @@ namespace XRMultiplayer
 
         /// <summary>
         /// Called when trying to join a specific Lobby.
+        /// Cloud mode only.
         /// </summary>
         /// <param name="lobby">Lobby to join.</param>
         public virtual async void JoinLobbySpecific(Lobby lobby)
         {
+            if (IsLANMode())
+            {
+                Utils.Log($"{k_DebugPrepend}JoinLobbySpecific called in LAN mode. Use LANConnectionManager instead.", 1);
+                ConnectionFailed("Cannot join specific lobby in LAN Direct mode.");
+                return;
+            }
+            
             Utils.Log($"{k_DebugPrepend}Joining specific Lobby: {lobby.Name}.");
             if (await AbleToConnect())
             {
@@ -487,12 +711,20 @@ namespace XRMultiplayer
 
         /// <summary>
         /// Creates a new Lobby.
+        /// Cloud mode only.
         /// </summary>
         /// <param name="roomName">Name of the lobby.</param>
         /// <param name="isPrivate">Whether or not the lobby is private.</param>
         /// <param name="playerCount">Maximum allowed players.</param>
         public virtual async void CreateNewLobby(string roomName = null, bool isPrivate = false, int playerCount = maxPlayers)
         {
+            if (IsLANMode())
+            {
+                Utils.Log($"{k_DebugPrepend}CreateNewLobby called in LAN mode. Use LANConnectionManager instead.", 1);
+                ConnectionFailed("Cannot create lobby in LAN Direct mode.");
+                return;
+            }
+            
             Utils.Log($"{k_DebugPrepend}Creating New Lobby: {roomName}.");
             if (await AbleToConnect())
             {
@@ -534,6 +766,7 @@ namespace XRMultiplayer
 
         /// <summary>
         /// Connect to a lobby.
+        /// Cloud mode only - for LAN connections, use LANConnectionManager directly.
         /// </summary>
         /// <param name="lobby">Lobby to connect to.</param>
         protected virtual void ConnectToLobby(Lobby lobby)
@@ -548,6 +781,7 @@ namespace XRMultiplayer
         /// <summary>
         /// Checks if we successfully connected to a Lobby.
         /// If <see cref="autoConnectOnLobbyJoin"/> is enabled, join networked game here.
+        /// Cloud mode only.
         /// </summary>
         /// <returns>Whether or not we connected to a lobby and / or networked game.</returns>
         protected virtual bool ConnectedToLobby()
@@ -592,6 +826,7 @@ namespace XRMultiplayer
 
         /// <summary>
         /// Subscribe to lobby update events. This needed to be informed of Lobby changes (name, privacy, etc...).
+        /// Cloud mode only.
         /// </summary>
         /// <remarks>See <see cref="OnLobbyChanged(ILobbyChanges)"/>.</remarks>
         protected virtual async void SubscribeToLobbyEvents()
@@ -617,6 +852,7 @@ namespace XRMultiplayer
 
         /// <summary>
         /// Callabacks for anytime the lobby event connection state has changed.
+        /// Cloud mode only.
         /// </summary>
         /// <param name="state"></param>
         private void OnLobbyEventConnectionStateChanged(LobbyEventConnectionState state)
@@ -636,6 +872,7 @@ namespace XRMultiplayer
 
         /// <summary>
         /// Callback for anytime a lobby is updated via <see cref="LobbyService.Instance.SubscribeToLobbyEventsAsync"/>.
+        /// Cloud mode only.
         /// </summary>
         /// <param name="changes"></param>
         protected virtual void OnLobbyChanged(ILobbyChanges changes)
@@ -673,15 +910,29 @@ namespace XRMultiplayer
         /// </summary>
         public virtual async void CancelMatchmaking()
         {
-            if (IsAuthenticated())
+            // Handle both Cloud and LAN modes
+            if (IsLANMode())
             {
-                m_ConnectionState.Value = ConnectionState.Authenticated;
+                // In LAN mode, just disconnect from network
+                if (m_LANConnectionManager != null)
+                {
+                    m_LANConnectionManager.Disconnect();
+                }
             }
-            await m_LobbyManager.RemovePlayerFromLobby(AuthenicationId);
+            else
+            {
+                // In Cloud mode, remove from lobby
+                if (IsAuthenticated())
+                {
+                    m_ConnectionState.Value = ConnectionState.Authenticated;
+                }
+                await m_LobbyManager.RemovePlayerFromLobby(AuthenicationId);
+            }
         }
 
         /// <summary>
         /// High Level Disconnect call.
+        /// Handles both Cloud and LAN modes.
         /// </summary>
         public virtual async void Disconnect()
         {
@@ -690,22 +941,45 @@ namespace XRMultiplayer
 
         /// <summary>
         /// Awaitable Disconnect call, used for Hot Joining.
+        /// Handles both Cloud and LAN modes.
         /// </summary>
         /// <returns></returns>
         public virtual async Task<bool> DisconnectAsync()
         {
-            bool fullyDisconnected = await m_LobbyManager.RemovePlayerFromLobby(AuthenicationId);
-            m_Connected.Value = false;
-            NetworkManager.Shutdown();
-            if (IsAuthenticated())
+            bool fullyDisconnected = true;
+            
+            // Handle disconnection based on current mode
+            if (IsLANMode())
             {
+                // In LAN mode, disconnect via LANConnectionManager
+                if (m_LANConnectionManager != null)
+                {
+                    m_LANConnectionManager.Disconnect();
+                }
+                
+                // NetworkManager shutdown is handled by LANConnectionManager
+                m_Connected.Value = false;
                 m_ConnectionState.Value = ConnectionState.Authenticated;
+                Utils.Log($"{k_DebugPrepend}Disconnected from LAN session.");
             }
             else
             {
-                m_ConnectionState.Value = ConnectionState.None;
+                // In Cloud mode, remove from lobby and shutdown network
+                fullyDisconnected = await m_LobbyManager.RemovePlayerFromLobby(AuthenicationId);
+                m_Connected.Value = false;
+                NetworkManager.Shutdown();
+                
+                if (IsAuthenticated())
+                {
+                    m_ConnectionState.Value = ConnectionState.Authenticated;
+                }
+                else
+                {
+                    m_ConnectionState.Value = ConnectionState.None;
+                }
+                Utils.Log($"{k_DebugPrepend}Disconnected from Cloud session.");
             }
-            Utils.Log($"{k_DebugPrepend}Disconnected from Game.");
+            
             return fullyDisconnected;
         }
     }
