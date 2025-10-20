@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: a25453611b1fcc940b886e27289179e1
+  productGUID: e10f9f9c7e8f3614e8f1fa55bb807cc4
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -399,10 +399,7 @@ PlayerSettings:
       m_Height: 1024
       m_Kind: 0
       m_SubKind: 
-  m_BuildTargetBatching:
-  - m_BuildTarget: Android
-    m_StaticBatching: 1
-    m_DynamicBatching: 0
+  m_BuildTargetBatching: []
   m_BuildTargetShaderSettings: []
   m_BuildTargetGraphicsJobs: []
   m_BuildTargetGraphicsJobMode: []
@@ -816,10 +813,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: 05f389ad-d8fd-4289-aed8-c8665703a153
+  cloudProjectId: 73701ff8-c1b2-4a58-bd3c-4b50f036fe0b
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: mr-multiplayer
+  projectName: mr-multiplayer 2025-10-20_14-34-43
   organizationId: jonfjakobsen
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

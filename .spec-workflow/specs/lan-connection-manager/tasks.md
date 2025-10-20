@@ -1,6 +1,6 @@
 # Tasks Document
 
-- [x] 1. Create core LANConnectionManager component in Assets/XRMP/Scripts/Network/NetworkManagers/LANConnectionManager.cs
+- [ ] 1. Create core LANConnectionManager component in Assets/XRMP/Scripts/Network/NetworkManagers/LANConnectionManager.cs
   - File: Assets/XRMP/Scripts/Network/NetworkManagers/LANConnectionManager.cs
   - Implement main coordinator for direct IP-based network connections
   - Add methods: HostLAN(), JoinLAN(), GetLocalIPAddress()
@@ -10,7 +10,7 @@
   - _Requirements: 1.1, 1.2, 6.1_
   - _Prompt: Implement the task for spec lan-connection-manager, first run spec-workflow-guide to get the workflow guide then implement the task: Role: Unity Network Developer specializing in Netcode for GameObjects and Unity Transport | Task: Create LANConnectionManager component following requirements 1.1, 1.2, and 6.1, integrating with existing XRINetworkGameManager and NetworkManagerXRMultiplayer patterns from the Unity MR Multiplayer template | Restrictions: Must not modify existing UGS cloud functionality, maintain compatibility with existing NetworkBehaviours, do not bypass Unity Transport security features, follow template coding conventions | _Leverage: Existing network manager patterns, Unity Transport component configuration, NetworkManager state management | Unity-MCP Tools: Use Script_Read to examine XRINetworkGameManager.cs and NetworkManagerXRMultiplayer.cs patterns, grep_search to find existing NetworkManager implementations and Unity Transport configurations, Component_GetAll to identify network components, Script_CreateOrUpdate to create LANConnectionManager.cs, Assets_Refresh after script creation, and Console_GetLogs to verify compilation success | Success: Component successfully hosts and joins LAN sessions, integrates seamlessly with existing network architecture, all existing multiplayer features work identically. Mark task as in-progress in tasks.md before starting using Unity-MCP tools, mark as complete when finished._
 
-- [x] 2. Create IPDiscoveryService utility in Assets/XRMP/Scripts/Network/Utils/IPDiscoveryService.cs
+- [ ] 2. Create IPDiscoveryService utility in Assets/XRMP/Scripts/Network/Utils/IPDiscoveryService.cs
   - File: Assets/XRMP/Scripts/Network/Utils/IPDiscoveryService.cs
   - Implement static utility for network interface detection on Quest 3
   - Add methods: GetLocalIPAddress(), ValidateIPAddress(), GetWiFiInterface()
@@ -20,7 +20,7 @@
   - _Requirements: 4.1, 4.2, 4.3_
   - _Prompt: Implement the task for spec lan-connection-manager, first run spec-workflow-guide to get the workflow guide then implement the task: Role: Unity Platform Developer with expertise in Android networking and Meta Quest development | Task: Create IPDiscoveryService utility following requirements 4.1, 4.2, and 4.3, implementing WiFi interface detection optimized for Meta Quest 3 platform | Restrictions: Must prioritize WiFi over mobile interfaces, handle network permission exceptions gracefully, ensure Android compatibility, validate IP address formats properly | _Leverage: Unity conditional compilation directives, Android NetworkInformation APIs, existing platform detection patterns | Unity-MCP Tools: Use grep_search to find existing platform-specific code and conditional compilation patterns, Script_Read to examine Android networking implementations, Script_CreateOrUpdate to create IPDiscoveryService.cs utility class, Script_Execute to test IP discovery functionality dynamically, Console_GetLogs to monitor network permission warnings, and Assets_Refresh after creation | Success: Utility correctly detects Quest 3 WiFi IP addresses, validates IP formats accurately, handles network errors gracefully. Mark task as in-progress in tasks.md before starting using Unity-MCP tools, mark as complete when finished._
 
-- [x] 3. Create ConnectionModeManager component in Assets/XRMP/Scripts/Network/NetworkManagers/ConnectionModeManager.cs
+- [ ] 3. Create ConnectionModeManager component in Assets/XRMP/Scripts/Network/NetworkManagers/ConnectionModeManager.cs
   - File: Assets/XRMP/Scripts/Network/NetworkManagers/ConnectionModeManager.cs
   - Implement central coordinator for switching between Cloud and LAN modes
   - Add mode selection logic with ConnectionMode enum
@@ -30,8 +30,8 @@
   - _Requirements: 3.1, 3.2, 3.3_
   - _Prompt: Implement the task for spec lan-connection-manager, first run spec-workflow-guide to get the workflow guide then implement the task: Role: Unity Architecture Developer specializing in state management and component coordination | Task: Create ConnectionModeManager following requirements 3.1, 3.2, and 3.3, coordinating between new LAN functionality and existing UGS cloud systems | Restrictions: Must not break existing cloud lobby functionality, ensure clean state transitions, avoid tight coupling between connection modes, maintain event-driven architecture | _Leverage: Existing LobbyManager patterns, XRINetworkGameManager state management, Unity event system | Unity-MCP Tools: Use Script_Read to examine LobbyManager.cs and existing state management code, grep_search to find event system patterns and state machine implementations, Component_GetAll to identify manager components, Script_CreateOrUpdate to create ConnectionModeManager.cs, Scene_GetHierarchy to verify component relationships in active scenes, and Console_GetLogs to check for state transition errors | Success: Mode switching works seamlessly, both connection modes function independently, existing cloud features remain unaffected. Mark task as in-progress in tasks.md before starting using Unity-MCP tools, mark as complete when finished._
 
-- [x] 4. Create LANConnectionUI component in Assets/MRTabletopAssets/Scripts/UI/LAN/LANConnectionUI.cs
-  - File: Assets/XRMP/Scripts/UI/LANConnectionUI.cs (COMPLETED)
+- [ ] 4. Create LANConnectionUI component in Assets/MRTabletopAssets/Scripts/UI/LAN/LANConnectionUI.cs
+  - File: Assets/MRTabletopAssets/Scripts/UI/LAN/LANConnectionUI.cs
   - Implement user interface for connection mode selection and IP address entry
   - Add UI elements: mode toggle, IP input field, host/join buttons, status display
   - Integrate with existing LobbyUI styling and notification systems
@@ -40,7 +40,7 @@
   - _Requirements: 2.1, 2.2, 2.3, 5.1_
   - _Prompt: Implement the task for spec lan-connection-manager, first run spec-workflow-guide to get the workflow guide then implement the task: Role: Unity UI Developer with expertise in Canvas-based VR interfaces and user experience | Task: Create LANConnectionUI component following requirements 2.1, 2.2, 2.3, and 5.1, extending existing LobbyUI patterns with LAN-specific interface elements | Restrictions: Must follow existing UI styling patterns, ensure VR-friendly input methods, provide clear visual feedback, maintain accessibility standards | _Leverage: Existing LobbyUI component structure, TextMeshPro components, Unity UI event system, notification systems | Unity-MCP Tools: Use Script_Read to examine LobbyUI.cs implementation and UI patterns, grep_search to find UI styling and notification system code, Component_GetAll to identify Canvas and UI components, Script_CreateOrUpdate to create LANConnectionUI.cs, Assets_Find to locate UI prefab templates (t:Prefab), GameObject_Find to test UI hierarchy, and Console_GetLogs to check for UI errors | Success: UI provides clear mode selection, IP address input validation works properly, connection status updates are visible and helpful. Mark task as in-progress in tasks.md before starting using Unity-MCP tools, mark as complete when finished._
 
-- [-] 5. Create LANConnectionPanel prefab in Assets/MRTabletopAssets/Prefabs/UI/LANConnectionPanel.prefab
+- [ ] 5. Create LANConnectionPanel prefab in Assets/MRTabletopAssets/Prefabs/UI/LANConnectionPanel.prefab
   - File: Assets/MRTabletopAssets/Prefabs/UI/LANConnectionPanel.prefab
   - Create UI prefab with LANConnectionUI script and all required components
   - Configure Canvas, input fields, buttons, and text displays
