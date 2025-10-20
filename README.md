@@ -2,11 +2,15 @@
 
 An affordable VR system that enables multiple users to share the same physical room while collaborating in a virtual environment using Meta Quest 3 headsets.
 
+**🚀 Current Status:** This project now uses Unity's MR Multiplayer Tabletop template as the foundation, providing robust XR multiplayer capabilities out of the box.
+
 ## Overview
 
 VR rooms are transforming physical spaces into shared multi-user VR environments where teams can train together, with companies like Virtualware deploying over 32 VIROO Rooms worldwide for industries from railways to military training. However, most solutions require expensive custom installations. 
 
 This project develops an affordable alternative that addresses the unique challenges of co-located users - unlike typical multi-user VR platforms where users connect from different locations, this system focuses on users sharing the same physical space.
+
+**Technical Foundation:** Built on Unity's MR Multiplayer Tabletop template (`com.unity.template.mr-multiplayer@1.0.3`), leveraging proven XR Interaction Toolkit and Netcode for GameObjects integration.
 
 ## Project Goals
 
@@ -38,31 +42,36 @@ The main technical challenges include:
 ## Technology Stack
 
 ### Development Environment
-- **Unity 2022.3+ LTS** - Primary development platform
+- **Unity LTS** - Using template-supported version
 - **C#** - Programming language
 - **Meta Quest 3** - Target VR hardware (3 devices provided)
 
-### VR Frameworks
-- **Meta XR SDK** - Native Quest development support
-- **XR Interaction Toolkit** or **OpenXR** - VR interaction systems
-- **Meta Quest Shared Space API** - Multi-user co-location features
+### VR Frameworks (Template-Provided)
+- **XR Interaction Toolkit 3.x** - Comprehensive XR interaction system
+- **OpenXR + Meta OpenXR Plugin** - Cross-platform XR runtime
+- **AR Foundation 6.x** - Mixed reality capabilities
+- **XR Hands** - Hand tracking support
 
-### Networking
-- **Unity Netcode for GameObjects** - Networking solution
-- **Meta Quest Platform SDK** - Social features and user management
+### Networking (Template-Integrated)
+- **Netcode for GameObjects 2.x** - Unity's official multiplayer framework
+- **Unity Transport** - Low-level networking transport
+- **Unity Services** - Authentication, Lobby/Relay, Vivox voice chat
+- **Unity Multiplayer Tools** - Debugging and profiling
 
-### Version Control
-- **GitHub** - Code management and collaboration
-- Regular demonstrations throughout development
+### Development Tools
+- **Multiplayer Play Mode** - Editor-based multiplayer testing
+- **ParrelSync** - Alternative Editor clone testing
+- **XR Device Simulator** - Editor VR simulation
 
-## Meta Quest Shared Space Integration
+## Architecture Overview
 
-This project leverages Meta Quest's native shared space capabilities:
+Built on Unity's proven MR Multiplayer template architecture:
 
-- **Automatic Space Sharing** - Quest headsets can automatically detect and share the same physical space
-- **Multi-user Guardian** - Shared boundary system for multiple users
-- **Spatial Anchors** - Persistent virtual object placement across sessions
-- **User Awareness** - Visual indicators of other users' positions and boundaries
+- **Client/Server Topology** - Host acts as server, clients connect via Unity Transport
+- **XR Interaction Framework** - Template-provided XR interaction patterns
+- **Network Object Synchronization** - NGO-based avatar and object sync
+- **Local & Cloud Support** - LAN testing and optional UGS cloud services
+- **Safety Integration** - Collision detection and guardian boundary management
 
 ## Target Use Cases
 
@@ -91,45 +100,51 @@ This project leverages Meta Quest's native shared space capabilities:
 
 ### Initial Setup
 1. Clone this repository
-2. Open project in Unity
-3. Install Meta XR SDK via Package Manager
-4. Configure build settings for Android/Quest platform
-5. Set up developer mode on Quest headsets
+2. Open the Unity project at `mr-multiplayer/` using a template-supported Unity LTS version
+3. Optional: Sign in to Unity Services for cloud features
+4. Open a sample scene:
+   - Basic: `Assets/XRMP/BasicScene.unity`
+   - Tabletop demo: `Assets/MRTabletopAssets/Games/Chess/Scenes/SlicesChess.unity`
+5. Test in Editor with XR Device Simulator or deploy to Quest 3
 
 ### Project Structure
 ```
-├── Assets/
-│   ├── Scripts/           # C# scripts for VR interactions
-│   ├── Prefabs/          # Reusable game objects
-│   ├── Scenes/           # Unity scenes
-│   ├── Materials/        # Visual materials and textures
-│   └── Networking/       # Network-related components
-├── Documentation/        # Technical documentation
-├── Tests/               # Unit and integration tests
+├── mr-multiplayer/           # Unity project root (MR Multiplayer template)
+│   ├── Assets/
+│   │   ├── XRMP/            # Template XR multiplayer framework
+│   │   ├── MRTabletopAssets/# Sample tabletop games
+│   │   ├── Scenes/          # Unity scenes
+│   │   └── Prefabs/         # Reusable game objects
+│   └── Packages/            # Unity packages and dependencies
+├── docs/                    # Comprehensive documentation
+│   ├── architecture/        # System design and diagrams
+│   ├── implementation/      # Technical guides
+│   └── workflows/           # Development processes
+├── MultiUser-VR-MVP-Guide.md # Template integration guide
 └── README.md
 ```
 
-## Development Milestones
+## Development Status
 
-### Phase 1: Foundation
-- [ ] Unity project setup with Meta XR SDK
-- [ ] Basic VR scene with Quest 3 support
-- [ ] Shared space detection implementation
+### ✅ Completed (Template Integration)
+- [x] Unity project setup with MR Multiplayer template
+- [x] VR scene support for Quest 3 via OpenXR
+- [x] Netcode for GameObjects integration
+- [x] XR Interaction Toolkit implementation
+- [x] Sample multiplayer scenes (Basic and Tabletop)
+- [x] Editor-based multiplayer testing setup
 
-### Phase 2: Multi-user Core
-- [ ] Multiple headset tracking validation
-- [ ] Basic networking with Netcode for GameObjects
-- [ ] Avatar synchronization system
+### 🔄 In Progress
+- [-] Avatar synchronization refinement
+- [-] Safety system integration
+- [-] Guardian boundary management
+- [-] Performance optimization for 3+ users
 
-### Phase 3: Safety & UX
-- [ ] Collision prevention system
-- [ ] Shared guardian boundary management
-- [ ] User awareness indicators
-
-### Phase 4: Applications
-- [ ] Training scenario prototypes
-- [ ] Educational use case development
-- [ ] Performance optimization
+### 📋 Next Phase
+- [ ] Custom training scenario development
+- [ ] Educational use case implementation
+- [ ] Advanced safety protocols
+- [ ] Research instrumentation integration
 
 ## Safety Considerations
 
@@ -138,12 +153,34 @@ This project leverages Meta Quest's native shared space capabilities:
 - **Emergency Protocols** - Quick VR exit procedures
 - **Guardian Boundaries** - Properly configured shared boundaries
 
+## Quick Start Guide
+
+### Editor Testing
+1. Open `mr-multiplayer/` in Unity
+2. Install Multiplayer Play Mode package
+3. Open `Assets/XRMP/BasicScene.unity`
+4. Use Play Mode to test with multiple virtual players
+
+### Device Testing (Quest 3)
+1. Build Settings: Android, ARM64
+2. Build and deploy APK to Quest 3 devices
+3. Connect via Unity Transport on local network
+4. Test multiplayer interactions
+
+## Documentation
+
+Comprehensive documentation available in `docs/`:
+- **[Architecture](docs/architecture/README.md)** - System design and components
+- **[Implementation](docs/implementation/README.md)** - Technical implementation guides  
+- **[Workflows](docs/workflows/README.md)** - Development and testing procedures
+- **[MVP Guide](MultiUser-VR-MVP-Guide.md)** - Template integration details
+
 ## Contributing
 
 1. Fork the repository
-2. Create feature branches for new development
-3. Follow C# coding standards
-4. Test with multiple Quest headsets when possible
+2. Work within the `mr-multiplayer/` Unity project
+3. Follow template-aligned architecture patterns
+4. Test with Multiplayer Play Mode and Quest 3 devices
 5. Document changes and submit pull requests
 
 ## Keywords
