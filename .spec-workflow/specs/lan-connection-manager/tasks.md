@@ -1,6 +1,6 @@
 # Tasks Document
 
-- [ ] 1. Create core LANConnectionManager component in Assets/XRMP/Scripts/Network/NetworkManagers/LANConnectionManager.cs
+- [x] 1. Create core LANConnectionManager component in Assets/XRMP/Scripts/Network/NetworkManagers/LANConnectionManager.cs
   - File: Assets/XRMP/Scripts/Network/NetworkManagers/LANConnectionManager.cs
   - Implement main coordinator for direct IP-based network connections
   - Add methods: HostLAN(), JoinLAN(), GetLocalIPAddress()
