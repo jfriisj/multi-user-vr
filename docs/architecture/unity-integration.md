@@ -34,7 +34,7 @@ Notes:
 ```mermaid
 flowchart TD
   subgraph PlayerPrefab[Player Prefab]
-    XRO[XR Origin (Action-based)]
+    XRO["XR Origin (Action-based)"]
     NO[NetworkObject]
     VRS[VRPlayerSync]
     PP[PoseProvider]

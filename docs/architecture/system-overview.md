@@ -15,14 +15,14 @@ flowchart TD
 
     subgraph L2[Networking Layer]
       NGO[Netcode for GameObjects]
-      UTP[Unity Transport (UDP)]
+      UTP["Unity Transport (UDP)"]
     end
 
     subgraph L3[Safety System Layer]
       SafetyCore[Safety Coordinator]
-      Proximity[Proximity / Collision Detection]
+      Proximity["Proximity / Collision Detection"]
       Guardian[Quest Guardian Integration]
-      Alerts[Visual/Haptic Alerts]
+      Alerts["Visual/Haptic Alerts"]
     end
 
     subgraph L4[Game Logic Layer]
@@ -33,7 +33,7 @@ flowchart TD
 
     subgraph L5[Research Instrumentation]
       Metrics[Metrics Tracking]
-      Logging[Data Logging (JSON/CSV)]
+      Logging["Data Logging (JSON/CSV)"]
     end
 
     %% Relationships

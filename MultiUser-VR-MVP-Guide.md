@@ -55,6 +55,7 @@ Right-click the `MultiUserVRSetup` component and select **"Setup Multi-User VR"*
 - One-click setup for entire multi-user system
 - Automatically configures all necessary components
 - Adds NetworkObjects and Rigidbodies where needed
+- See integration diagrams: [Unity Integration](docs/architecture/unity-integration.md) and [Scene Component Map](docs/implementation/component-relationships.md)
 
 ## 🎯 What This MVP Provides
 
@@ -71,6 +72,11 @@ Right-click the `MultiUserVRSetup` component and select **"Setup Multi-User VR"*
 - **Port**: 7777 (configurable)
 - **Architecture**: Client-Server (Host acts as server)
 - **Max Players**: 3 (1 Host + 2 Clients)
+
+### **Discovery & Join (MVP)**
+- Default: local network auto-discovery and same-WiFi join flow
+- Manual IP override: allowed as fallback
+- Future (optional): Unity Relay/Lobby for NAT traversal—no core design changes required
 
 ### **Synchronization:**
 - **Player Tracking**: 20 updates/second
@@ -128,6 +134,16 @@ Ready to integrate with Unity's Vivox or other voice solutions.
 - ✅ **XR Interaction Toolkit** (Already configured) 
 - ✅ **Meta XR SDK** (Already integrated)
 - ✅ **Unity Transport** (Included with Netcode)
+
+## 🔒 Post‑MVP Enhancements (Optional)
+These are documented and ready but not required for the MVP. Enable as needed without impacting core flows:
+
+- **Safety System** (proximity, warnings, movement restriction, guardian):
+  - [Collision Detection](docs/implementation/collision-detection.md), [Safety Protocols](docs/implementation/safety-protocols.md), [Guardian Integration](docs/implementation/guardian-integration.md)
+- **Research Instrumentation** (opt‑in data collection and metrics):
+  - [Data Collection](docs/implementation/data-collection.md), [Metrics Tracking](docs/implementation/metrics-tracking.md), [Research Procedures](docs/workflows/research-procedures.md)
+- **Demo & Presentation** (reliable stakeholder demos):
+  - [Demo Setup](docs/workflows/demo-setup.md), [Showcase Scenarios](docs/implementation/showcase-scenarios.md), [Presentation Guide](docs/workflows/presentation-guide.md)
 
 ## 🎉 Ready to Go!
 

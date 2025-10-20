@@ -9,7 +9,7 @@ Topology and session flow for 1 Host (server-authoritative) + 2 Clients using Un
 flowchart LR
   subgraph Host[Quest 3 A (Host/Server)]
     HNM[NetworkManager]
-    HUTP[Unity Transport: UDP:7777]
+    HUTP["Unity Transport: UDP:7777"]
     HSpawn[Player/NetObject Spawner]
     HSafety[Safety Coordinator Authority]
   end

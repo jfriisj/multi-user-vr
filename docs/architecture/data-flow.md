@@ -7,7 +7,7 @@ Focused data flows for tracking, interaction, and safety pipelines. Diagrams are
 ## Head/Hand Tracking Synchronization
 ```mermaid
 flowchart LR
-  XR[XRI Input (Head/Hands)] --> VRSync[VRPlayerSync]
+  XR["XRI Input (Head/Hands)"] --> VRSync[VRPlayerSync]
   VRSync --> AvSys[Avatar System]
   AvSys --> NetMgr[NGO NetworkManager]
   NetMgr -->|Broadcast| Clients[Other Clients]
@@ -35,5 +35,5 @@ flowchart TD
   Decision -->|Medium| Haptic[Haptic Warning]
   Decision -->|High| Restrict[Movement Restriction]
   SafetyCore --> Metrics[Metrics Collector]
-  Metrics --> Logger[Data Logger (JSON/CSV)]
+  Metrics --> Logger["Data Logger (JSON/CSV)"]
 ```
