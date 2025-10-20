@@ -9,7 +9,7 @@ Readable component-level interactions grouped by responsibility (Requirements 1.
 flowchart LR
   subgraph VR[VR Subsystem]
     XROrigin[XR Origin]
-    InputMgr[Controller/Input Manager]
+    InputMgr["Controller/Input Manager"]
     VRPlayerSync[VRPlayerSync]
   end
 
@@ -22,7 +22,7 @@ flowchart LR
   subgraph SAFETY[Safety]
     SafetyCoord[Safety Coordinator]
     Prox[Proximity Monitor]
-    Warn[Warning UI/Haptics]
+    Warn["Warning UI/Haptics"]
   end
 
   subgraph GAME[Game Logic]

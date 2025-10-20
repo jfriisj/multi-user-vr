@@ -8,7 +8,7 @@ Unity component dependencies and message flow to guide implementation. Complemen
 ```mermaid
 flowchart LR
   subgraph XR[XR Origin]
-    Head[Camera (HMD)]
+    Head["Camera (HMD)"]
     LCtrl[Left Controller]
     RCtrl[Right Controller]
     Move[ContinuousMoveProvider]

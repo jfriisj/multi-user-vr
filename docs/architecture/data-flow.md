@@ -28,7 +28,7 @@ flowchart TD
 ## Safety Event Pipeline
 ```mermaid
 flowchart TD
-  Pose[User Poses (3 users)] --> Prox[Proximity Monitor]
+  Pose["User Poses (3 users)"] --> Prox[Proximity Monitor]
   Prox --> SafetyCore[Safety Coordinator]
   SafetyCore --> Decision[Risk Assessment]
   Decision -->|Low| Visual[Visual Indicator]

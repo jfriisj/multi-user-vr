@@ -38,9 +38,9 @@ flowchart TD
     NO[NetworkObject]
     VRS[VRPlayerSync]
     PP[PoseProvider]
-    TMH[TrackingMonitor: Head]
-    TML[TrackingMonitor: Left]
-    TMR[TrackingMonitor: Right]
+    TMH["TrackingMonitor: Head"]
+    TML["TrackingMonitor: Left"]
+    TMR["TrackingMonitor: Right"]
     MG[MovementGate]
     SCH[SafetyCoordinator]
   end
@@ -80,5 +80,5 @@ sequenceDiagram
   NM-->>Host: Spawn Player Prefab (owner=Host)
   Client->>NM: StartClient()
   NM-->>Client: Spawn Player Prefab (owner=Client)
-  note over Host,Client: VRPlayerSync streams poses; Safety monitors proximity
+  Note over Host,Client: VRPlayerSync streams poses<br/>Safety monitors proximity
 ```

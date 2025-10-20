@@ -7,17 +7,17 @@ Topology and session flow for 1 Host (server-authoritative) + 2 Clients using Un
 ## High-Level Topology (Req 4.1)
 ```mermaid
 flowchart LR
-  subgraph Host[Quest 3 A (Host/Server)]
+  subgraph Host["Quest 3 A (Host/Server)"]
     HNM[NetworkManager]
     HUTP["Unity Transport: UDP:7777"]
     HSpawn[Player/NetObject Spawner]
     HSafety[Safety Coordinator Authority]
   end
-  subgraph ClientB[Quest 3 B (Client)]
+  subgraph ClientB["Quest 3 B (Client)"]
     BNM[NetworkClient]
     BUTP[Unity Transport]
   end
-  subgraph ClientC[Quest 3 C (Client)]
+  subgraph ClientC["Quest 3 C (Client)"]
     CNM[NetworkClient]
     CUTP[Unity Transport]
   end
@@ -44,7 +44,9 @@ sequenceDiagram
   Host-->>B: Approve + Spawn Player Prefab
   C->>Host: StartClient() → Connect
   Host-->>C: Approve + Spawn Player Prefab
-  Note over Host,B,C: NGO replicates Player state + networked objects
+  Note over Host: NGO replicates Player state + networked objects
+  Note over B: NGO replicates Player state + networked objects
+  Note over C: NGO replicates Player state + networked objects
 ```
 
 ## Authority and Ownership
