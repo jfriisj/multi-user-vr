@@ -1,0 +1,25 @@
+{
+    "name": "Tests.EditMode",
+    "rootNamespace": "XRMultiplayer.Tests",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:8a0c93e2eaa4bde4b977f68eb73e10a0",
+        "GUID:0acc523941302664db1f4e527237feb3"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
