@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 4145292139985048678}
   - component: {fileID: 874452183138526564}
   - component: {fileID: 2613880095383542483}
+  - component: {fileID: 8093832441590134697}
+  - component: {fileID: 4463207403812375140}
+  - component: {fileID: -66212070937813906}
   m_Layer: 0
   m_Name: Network Manager XR Multiplayer
   m_TagString: Untagged
@@ -135,3 +138,53 @@ MonoBehaviour:
     PacketDelayMS: 0
     PacketJitterMS: 0
     PacketDropRate: 0
+--- !u!114 &8093832441590134697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5087823492143518475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 809552c2407dac148a1ae9a7386f7e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: XRMP::XRMultiplayer.LANConnectionManager
+  m_DefaultPort: 7777
+  m_ConnectionTimeout: 5
+  m_DebugLogging: 1
+--- !u!114 &4463207403812375140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5087823492143518475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500b6822bad639b468c626f46fe4ceb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: XRMP::XRMultiplayer.ConnectionModeManager
+  m_DefaultMode: 0
+  m_AutoSwitchOnCloudFailure: 1
+  m_DebugLogging: 1
+--- !u!114 &-66212070937813906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5087823492143518475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4a87b261297a944ea161e1917bb0c15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: XRMP::XRMultiplayer.LANConnectionStatus
+  m_ConnectionTimeout: 5
+  m_ReconnectionTimeout: 30
+  m_ReconnectionInterval: 3
+  m_EnableAutoReconnect: 1
+  m_MaxReconnectionAttempts: 10
+  m_ShowCountdownTimer: 1
+  m_StatusDisplayDuration: 3
+  m_DebugLogging: 1
