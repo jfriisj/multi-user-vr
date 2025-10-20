@@ -1,0 +1,14 @@
+{
+  "filePath": ".spec-workflow/specs/session-management-ui/tasks.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-20T19:44:50.463Z",
+      "trigger": "initial",
+      "approvalId": "approval_1760989490458_ae9vzko4u",
+      "approvalTitle": "Tasks for session-management-ui"
+    }
+  ]
+}

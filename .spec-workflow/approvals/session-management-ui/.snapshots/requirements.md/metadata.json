@@ -1,0 +1,14 @@
+{
+  "filePath": ".spec-workflow/specs/session-management-ui/requirements.md",
+  "currentVersion": 1,
+  "snapshots": [
+    {
+      "version": 1,
+      "filename": "snapshot-001.json",
+      "timestamp": "2025-10-20T19:39:46.435Z",
+      "trigger": "initial",
+      "approvalId": "approval_1760989186424_ahuexs5pq",
+      "approvalTitle": "Requirements for session-management-ui"
+    }
+  ]
+}
