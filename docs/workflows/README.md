@@ -1,5 +1,7 @@
 # Workflow Documentation
 
+[← Documentation Home](../README.md)
+
 Development processes and procedures for building, testing, and deploying the system.
 
 ## Overview
@@ -15,3 +17,7 @@ Use these workflows to standardize development practices across the team.
 - [Error Resolution](error-resolution.md)
 - [Demo Setup](demo-setup.md)
 - [Presentation Guide](presentation-guide.md)
+
+---
+
+Related sections: [Architecture](../architecture/README.md) · [Implementation](../implementation/README.md)

@@ -1,5 +1,7 @@
 # Architecture Documentation
 
+[← Documentation Home](../README.md)
+
 High-level overview of the system architecture and navigation to detailed diagrams.
 
 ## Overview
@@ -11,3 +13,7 @@ This section contains architecture diagrams and technical specifications for the
 - [Data Flow Diagrams](data-flow.md)
 - [Network Topology](network-topology.md)
 - [Unity Integration](unity-integration.md)
+
+---
+
+Related sections: [Implementation](../implementation/README.md) · [Workflows](../workflows/README.md)

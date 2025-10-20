@@ -1,5 +1,7 @@
 # Implementation Guides
 
+[← Documentation Home](../README.md)
+
 Unity development guides for building the co-located multi-user VR system.
 
 ## Overview
@@ -21,3 +23,7 @@ Follow these guides for implementing VR features using Unity 2022.3 LTS, XR Inte
 - [Network Performance](network-performance.md)
 - [Common Issues](common-issues.md)
 - [Showcase Scenarios](showcase-scenarios.md)
+
+---
+
+Related sections: [Architecture](../architecture/README.md) · [Workflows](../workflows/README.md)
