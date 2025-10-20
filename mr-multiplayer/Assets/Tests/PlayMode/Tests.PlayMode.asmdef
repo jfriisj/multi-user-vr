@@ -1,6 +1,6 @@
 {
-    "name": "Tests.EditMode",
-    "rootNamespace": "XRMultiplayer.Tests",
+    "name": "Tests.PlayMode",
+    "rootNamespace": "XRMultiplayer.Tests.Integration",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
@@ -9,9 +9,7 @@
         "Unity.Transport",
         "XRMP"
     ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
