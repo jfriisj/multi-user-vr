@@ -20,8 +20,8 @@ End-to-end workflow integrating spec-workflow, GitHub Flow, Unity development, a
 7) Open PR; ensure all checks pass; request review
 
 ## Local Setup
-- Unity 2022.3 LTS with Android Build Support
-- Clone repo and (when present) open Unity project at `vr/`
+- Unity LTS supported by the template with Android Build Support
+- Clone repo and (when present) open Unity project at `mr-multiplayer/`
 - Import required packages (see Implementation → VR Setup)
 
 ## Quality Gates (must pass before merge)
@@ -37,19 +37,19 @@ Use Unity command line to ensure repeatability (adjust editor path):
 
 ```powershell
 # EditMode tests
-"C:\\Program Files\\Unity\\Hub\\Editor\\2022.3.x\\Editor\\Unity.exe" `
-  -batchmode -quit -projectPath .\vr `
+"C:\\Program Files\\Unity\\Hub\\Editor\\<LTS_VERSION>\\Editor\\Unity.exe" `
+  -batchmode -quit -projectPath .\\mr-multiplayer `
   -runTests -testPlatform EditMode `
-  -logFile .\Logs\EditMode.log `
-  -testResults .\Logs\EditMode.xml `
+  -logFile .\\Logs\\EditMode.log `
+  -testResults .\\Logs\\EditMode.xml `
   -testResultsFormatter NUnit
 
 # PlayMode tests
-"C:\\Program Files\\Unity\\Hub\\Editor\\2022.3.x\\Editor\\Unity.exe" `
-  -batchmode -quit -projectPath .\vr `
+"C:\\Program Files\\Unity\\Hub\\Editor\\<LTS_VERSION>\\Editor\\Unity.exe" `
+  -batchmode -quit -projectPath .\\mr-multiplayer `
   -runTests -testPlatform PlayMode `
-  -logFile .\Logs\PlayMode.log `
-  -testResults .\Logs\PlayMode.xml `
+  -logFile .\\Logs\\PlayMode.log `
+  -testResults .\\Logs\\PlayMode.xml `
   -testResultsFormatter NUnit
 ```
 

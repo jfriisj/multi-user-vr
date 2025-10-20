@@ -52,5 +52,5 @@ Notes:
 - Interactables: grabbable objects with `NetworkObject` + `NetworkedInteractable`
 
 ## Accuracy Notes
-- This reflects the planned Unity structure in steering/structure.md (vr/Assets/*) and the MVP guides
+- This reflects the Unity structure in steering/structure.md (mr-multiplayer/Assets/*) and the MVP guides
 - Update diagrams if the concrete project structure diverges during implementation

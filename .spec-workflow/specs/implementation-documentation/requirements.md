@@ -1,5 +1,7 @@
 # Requirements Document
 
+> Template alignment: Documentation must reflect the Unity MR Multiplayer Tabletop template as the baseline (project at `mr-multiplayer/`). Reuse template scenes/prefabs and NGO/XRI patterns throughout diagrams and guides.
+
 ## Introduction
 
 This specification defines the comprehensive documentation and diagram system needed to implement the co-located multi-user VR solution defined in the README and steering guide. The documentation will serve as the blueprint for Unity development, covering all technical aspects from system architecture to implementation patterns. This includes detailed diagrams that will guide developers through the complex interactions between networking, VR systems, safety mechanisms, and user experience components.

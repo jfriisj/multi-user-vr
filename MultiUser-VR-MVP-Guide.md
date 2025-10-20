@@ -1,157 +1,88 @@
-# Multi-User VR MVP Solution
+# MR Multiplayer Tabletop MVP Guide
 
-A clean, simple multi-user VR solution built with **Unity Netcode for GameObjects** that enables up to 3 users to collaborate in VR.
+This project now uses Unity’s MR Multiplayer Tabletop template as the baseline (template: `com.unity.template.mr-multiplayer@1.0.3`). The Unity project lives in `mr-multiplayer/`. All docs and workflows align with the template’s packages: XR Interaction Toolkit, Netcode for GameObjects, AR Foundation, and Unity Services (Authentication, Multiplayer, Vivox).
 
-## 🚀 Quick Start
+Reference: https://docs.unity3d.com/Packages/com.unity.template.mr-multiplayer@1.0/manual/index.html
 
-### 1. **Automatic Setup** (Recommended)
-The `MultiUserVRSetup` GameObject in the scene will automatically configure everything on startup:
+## 🚀 Quick start
 
-```
-Scene Hierarchy:
-├── MultiUserVRSetup (Auto-configures networking)
-├── XR Origin (XR Rig) (Your VR player)
-└── Interactables (Network-synced grabbable objects)
-```
+1) Open the Unity project at `mr-multiplayer/` using a template-supported Editor version (see Unity docs).
+2) Optional: Sign in to Unity Services if you plan to use Authentication/UGS Multiplayer/Relay/Vivox.
+3) Open a sample scene and press Play:
+   - Minimal sample: `Assets/XRMP/BasicScene.unity`
+   - Tabletop example: `Assets/MRTabletopAssets/Games/Chess/Scenes/SlicesChess.unity`
+4) Interact using XR Interaction Toolkit inputs (mouse/keyboard via XR Device Simulator in Editor, or VR controllers on device).
 
-### 2. **Manual Setup** (Alternative)
-Right-click the `MultiUserVRSetup` component and select **"Setup Multi-User VR"** from the context menu.
+## 🎮 Multiplayer testing
 
-## 🎮 How to Use
+Option A — Unity Multiplayer Play Mode (recommended for Editor-only)
+- Install/enable the Multiplayer Play Mode package and run multiple local player instances.
+- Validate NGO spawn, movement, and object sync without building to device.
 
-### **Host a Session:**
-1. Build and run on Quest 3 (Device A)
-2. The app automatically starts as **Host**
-3. Other players can join this session
+Option B — ParrelSync (Editor clones)
+- Use the ParrelSync extension to open clone Editor instances and connect as host/client.
 
-### **Join a Session:**  
-1. Build and run on Quest 3 (Device B & C)
-2. In the debug UI, click **"Join Session"**
-3. All 3 users now see each other's head and hand positions
+Option C — Device testing (Quest 3)
+- Build APKs and run on multiple devices; connect using NGO Unity Transport on LAN or UGS Relay/Lobby for NAT traversal.
 
-### **Interact with Objects:**
-- Grab any object in the **Interactables** group
-- Other users see the object move in real-time
-- Only one person can grab an object at a time
+## 📱 VR mode (Quest 3)
 
-## 🔧 Components Overview
+- Build Settings: Android, ARM64
+- XR: OpenXR with Meta OpenXR plugin
+- Test in-Editor with XR Device Simulator (Samples → XRI → XR Device Simulator) before deploying to devices
 
-### **MultiUserVRManager**
-- Manages network sessions (Host/Client)
-- Handles player connections/disconnections
-- Shows debug UI for testing
+## 🌐 Networking (NGO)
 
-### **VRPlayerSync**  
-- Synchronizes head and hand positions
-- Creates visual representations of remote players
-- Automatically finds VR components in XR Origin
+- Framework: Netcode for GameObjects (2.x) with Unity Transport
+- Topology: Client/Server (Host is server)
+- Cloud (optional): UGS Authentication + Lobby/Relay; Vivox for voice
+- Useful prefabs/scenes:
+  - `Assets/XRMP/Prefabs/Managers/Network Manager XR Multiplayer.prefab`
+  - `Assets/XRMP/BasicScene.unity`
+  - Tabletop assets under `Assets/MRTabletopAssets/`
 
-### **NetworkedInteractable**
-- Syncs grabbable objects across network
-- Handles ownership transfer when grabbing
-- Prevents conflicts (only one person can grab at a time)
+## 🔧 What this MVP provides (via the template)
 
-### **MultiUserVRSetup**
-- One-click setup for entire multi-user system
-- Automatically configures all necessary components
-- Adds NetworkObjects and Rigidbodies where needed
-- See integration diagrams: [Unity Integration](docs/architecture/unity-integration.md) and [Scene Component Map](docs/implementation/component-relationships.md)
+- Multiplayer-ready scenes and prefabs demonstrating XR + NGO integration
+- XR Interaction Toolkit-driven interactions in MR/AR/VR modes (we target VR)
+- Sample tabletop games (sandbox, slingshot, chess) for reference
+- Editor-first multiplayer testing flows
 
-## 🎯 What This MVP Provides
+## 🔍 Local and cloud test flows
 
-✅ **3-User VR Sessions** - Host + 2 Clients  
-✅ **Head & Hand Tracking Sync** - See other users' movements  
-✅ **Object Synchronization** - Shared grabbable objects  
-✅ **Simple Setup** - One-click configuration  
-✅ **Built-in Debug UI** - Easy testing and troubleshooting  
+- Local Editor: Multiplayer Play Mode or ParrelSync clones
+- Local LAN (devices): Unity Transport over Wi‑Fi
+- Cloud (optional): UGS Lobby/Relay for cross‑network sessions
 
-## 🌐 Network Architecture
+## 📋 Dependencies (from Packages/manifest.json)
 
-### **Unity Netcode for GameObjects**
-- **Transport**: Unity Transport (UDP)
-- **Port**: 7777 (configurable)
-- **Architecture**: Client-Server (Host acts as server)
-- **Max Players**: 3 (1 Host + 2 Clients)
+- XR Interaction Toolkit 3.x (`com.unity.xr.interaction.toolkit`)
+- Netcode for GameObjects 2.x (`com.unity.netcode.gameobjects`)
+- AR Foundation 6.x (`com.unity.xr.arfoundation`)
+- XR Hands (`com.unity.xr.hands`)
+- OpenXR (`com.unity.xr.openxr`) + Meta OpenXR (`com.unity.xr.meta-openxr`)
+- Unity Services (Authentication, Multiplayer, Vivox)
+- Multiplayer Tools (`com.unity.multiplayer.tools`)
 
-### **Discovery & Join (MVP)**
-- Default: local network auto-discovery and same-WiFi join flow
-- Manual IP override: allowed as fallback
-- Future (optional): Unity Relay/Lobby for NAT traversal—no core design changes required
+## 📚 Project documentation map
 
-### **Synchronization:**
-- **Player Tracking**: 20 updates/second
-- **Object Movement**: 30 updates/second  
-- **Grab States**: Event-based (immediate)
+- Architecture: `docs/architecture/` (system, network, Unity integration)
+- Implementation: `docs/implementation/` (XR/NGO patterns, performance, safety)
+- Workflows: `docs/workflows/` (dev process, testing, deployment, demos)
 
-## 📱 Building for Quest 3
+## 🗺️ Migration notes (from the previous MVP)
 
-1. **Build Settings**:
-   - Platform: Android
-   - Architecture: ARM64
-   - Target Device: Quest 3
+- Previous custom components (e.g., bespoke managers or auto‑config scripts) should be replaced or aligned with the template’s NGO/XRI patterns and prefabs.
+- Use the template’s scenes/prefabs as canonical references; add wrappers only where required.
 
-2. **XR Settings**:
-   - Already configured in project
-   - OpenXR + Meta XR SDK integration
+## 🔒 Post‑MVP Enhancements (optional)
 
-3. **Network Settings**:
-   - Local network discovery (same WiFi)
-   - IP address auto-detection
+- Safety system and guardian integration: see `docs/implementation/*`
+- Research instrumentation and metrics: see `docs/implementation/*` and `docs/workflows/research-procedures.md`
+- Demo/presentation procedures: see `docs/workflows/*`
 
-## 🔍 Testing Locally
+## ✅ Next steps
 
-### **In Unity Editor:**
-1. Play the scene
-2. Click **"Start Host"** in debug UI
-3. Use Unity's "Multiple Displays" to simulate clients
-
-### **On Device:**
-1. Build to 3 Quest 3 devices
-2. Ensure all are on the same WiFi network
-3. Start Host on one device, Join on others
-
-## 🛠️ Extending the MVP
-
-### **Add More Interactables:**
-```csharp
-// Any GameObject with XRGrabInteractable automatically gets networked
-gameObject.AddComponent<XRGrabInteractable>();
-// MultiUserVRSetup will auto-configure networking components
-```
-
-### **Custom Player Avatars:**
-```csharp
-// Assign custom prefab to VRPlayerSync.remotePlayerPrefab
-public GameObject customAvatarPrefab;
-```
-
-### **Voice Chat Integration:**
-Ready to integrate with Unity's Vivox or other voice solutions.
-
-## 📋 Dependencies
-
-- ✅ **Unity Netcode for GameObjects** (Already installed)
-- ✅ **XR Interaction Toolkit** (Already configured) 
-- ✅ **Meta XR SDK** (Already integrated)
-- ✅ **Unity Transport** (Included with Netcode)
-
-## 🔒 Post‑MVP Enhancements (Optional)
-These are documented and ready but not required for the MVP. Enable as needed without impacting core flows:
-
-- **Safety System** (proximity, warnings, movement restriction, guardian):
-  - [Collision Detection](docs/implementation/collision-detection.md), [Safety Protocols](docs/implementation/safety-protocols.md), [Guardian Integration](docs/implementation/guardian-integration.md)
-- **Research Instrumentation** (opt‑in data collection and metrics):
-  - [Data Collection](docs/implementation/data-collection.md), [Metrics Tracking](docs/implementation/metrics-tracking.md), [Research Procedures](docs/workflows/research-procedures.md)
-- **Demo & Presentation** (reliable stakeholder demos):
-  - [Demo Setup](docs/workflows/demo-setup.md), [Showcase Scenarios](docs/implementation/showcase-scenarios.md), [Presentation Guide](docs/workflows/presentation-guide.md)
-
-## 🎉 Ready to Go!
-
-Your multi-user VR MVP is complete! The solution is:
-
-- **Simple**: 4 core scripts, automatic setup
-- **Clean**: Extends existing XR template without breaking it  
-- **Scalable**: Easy to add features and upgrade to Photon later
-- **Production-Ready**: Uses Unity's official networking solution
-
-**Next Steps**: Test with 3 Quest 3 devices and start building your collaborative VR experience! 🚀
+- Validate multiplayer in Editor with 2–3 local players
+- Deploy to Quest 3 devices and verify NGO sync
+- Iterate features using template‑aligned architecture and docs

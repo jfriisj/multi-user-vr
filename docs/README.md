@@ -1,121 +1,79 @@
 # Multi-User VR Documentation
 
-This documentation provides comprehensive technical guidance for developing, implementing, and deploying the co-located multi-user VR system for Meta Quest 3 headsets.
+This documentation now aligns with Unity’s MR Multiplayer Tabletop template. The Unity project is in `mr-multiplayer/` and includes XR Interaction Toolkit, Netcode for GameObjects, AR Foundation, and Unity Services integrations.
 
 ## 📋 Documentation Structure
 
 ### 🏗️ Architecture Documentation
-Comprehensive system architecture diagrams and technical specifications.
-
-- [**System Overview**](architecture/README.md) - High-level architecture and component relationships
-- [**System Architecture Diagrams**](architecture/system-overview.md) - Complete system component diagrams
-- [**Component Relationships**](architecture/component-diagram.md) - Detailed component interaction diagrams
-- [**Data Flow Diagrams**](architecture/data-flow.md) - System data flow and processing patterns
-- [**Network Topology**](architecture/network-topology.md) - Multi-user networking architecture
-- [**Unity Integration**](architecture/unity-integration.md) - Unity-specific component integration
+- [System Overview](architecture/README.md) — High-level architecture and component relationships
+- [System Architecture Diagrams](architecture/system-overview.md) — Layered and component views
+- [Component Relationships](architecture/component-diagram.md) — Detailed interactions
+- [Data Flow Diagrams](architecture/data-flow.md) — Runtime data paths
+- [Network Topology](architecture/network-topology.md) — NGO client/server, UGS options
+- [Unity Integration](architecture/unity-integration.md) — Scenes, prefabs, and settings
 
 ### 💻 Implementation Guides
-Step-by-step Unity development guides with code examples and best practices.
-
-- [**Implementation Overview**](implementation/README.md) - Implementation guide index and getting started
-- [**VR Setup Guide**](implementation/vr-setup.md) - Unity XR configuration for Meta Quest 3
-- [**Avatar Synchronization**](implementation/avatar-synchronization.md) - Multi-user avatar sync implementation
-- [**Tracking Systems**](implementation/tracking-systems.md) - VR tracking and interference management
-- [**Collision Detection**](implementation/collision-detection.md) - Safety system collision detection algorithms
-- [**Safety Protocols**](implementation/safety-protocols.md) - User safety implementation patterns
-- [**Guardian Integration**](implementation/guardian-integration.md) - Meta Quest Guardian system integration
-- [**Synchronization Patterns**](implementation/synchronization-patterns.md) - Network data synchronization
-- [**Network Optimization**](implementation/network-optimization.md) - Network performance optimization
-- [**Data Collection**](implementation/data-collection.md) - Research data collection systems
-- [**Metrics Tracking**](implementation/metrics-tracking.md) - Performance and user behavior metrics
-- [**Component Relationships**](implementation/component-relationships.md) - Unity component interaction patterns
-- [**VR Performance**](implementation/vr-performance.md) - VR rendering optimization
-- [**Network Performance**](implementation/network-performance.md) - Network latency optimization
-- [**Common Issues**](implementation/common-issues.md) - Troubleshooting common problems
-- [**Showcase Scenarios**](implementation/showcase-scenarios.md) - Demo and presentation scenarios
+- [Implementation Overview](implementation/README.md)
+- [VR Setup Guide](implementation/vr-setup.md) — OpenXR + Meta plugin
+- [Avatar Synchronization](implementation/avatar-synchronization.md) — NGO sync patterns
+- [Tracking Systems](implementation/tracking-systems.md)
+- [Collision Detection](implementation/collision-detection.md)
+- [Safety Protocols](implementation/safety-protocols.md)
+- [Guardian Integration](implementation/guardian-integration.md)
+- [Synchronization Patterns](implementation/synchronization-patterns.md)
+- [Network Optimization](implementation/network-optimization.md)
+- [Data Collection](implementation/data-collection.md)
+- [Metrics Tracking](implementation/metrics-tracking.md)
+- [Component Relationships](implementation/component-relationships.md)
+- [VR Performance](implementation/vr-performance.md)
+- [Network Performance](implementation/network-performance.md)
+- [Common Issues](implementation/common-issues.md)
+- [Showcase Scenarios](implementation/showcase-scenarios.md)
 
 ### 📝 Workflow Documentation
-Development processes, testing procedures, and operational workflows.
+- [Workflow Overview](workflows/README.md)
+- [Development Process](workflows/development-process.md)
+- [Testing Procedures](workflows/testing-procedures.md)
+- [Deployment Guide](workflows/deployment-guide.md)
+- [Research Procedures](workflows/research-procedures.md)
+- [Performance Testing](workflows/performance-testing.md)
+- [Debugging Guide](workflows/debugging-guide.md)
+- [Error Resolution](workflows/error-resolution.md)
+- [Demo Setup](workflows/demo-setup.md)
+- [Presentation Guide](workflows/presentation-guide.md)
 
-- [**Workflow Overview**](workflows/README.md) - Development workflow index and process overview
-- [**Development Process**](workflows/development-process.md) - Complete development workflow from setup to deployment
-- [**Testing Procedures**](workflows/testing-procedures.md) - Comprehensive testing strategies and procedures
-- [**Deployment Guide**](workflows/deployment-guide.md) - Production deployment and distribution
-- [**Research Procedures**](workflows/research-procedures.md) - Academic research data collection workflows
-- [**Performance Testing**](workflows/performance-testing.md) - VR performance testing and validation
-- [**Debugging Guide**](workflows/debugging-guide.md) - Debugging and diagnostic procedures
-- [**Error Resolution**](workflows/error-resolution.md) - Common error resolution patterns
-- [**Demo Setup**](workflows/demo-setup.md) - Demonstration and showcase setup procedures
-- [**Presentation Guide**](workflows/presentation-guide.md) - Stakeholder presentation workflows
+## 🚀 Quick start (template‑aligned)
 
-## 🚀 Quick Start Guides
-
-### For Developers New to VR
-1. Start with [Architecture Overview](architecture/README.md)
-2. Follow [VR Setup Guide](implementation/vr-setup.md)
-3. Review [Development Process](workflows/development-process.md)
-
-### For Unity Developers
-1. Review [Unity Integration](architecture/unity-integration.md)
-2. Follow [Implementation Overview](implementation/README.md)
-3. Check [Component Relationships](implementation/component-relationships.md)
-
-### For Network Programmers
-1. Study [Network Topology](architecture/network-topology.md)
-2. Implement [Synchronization Patterns](implementation/synchronization-patterns.md)
-3. Optimize with [Network Performance](implementation/network-performance.md)
-
-### For Safety Engineers
-1. Understand [Safety System Architecture](architecture/system-overview.md#safety-systems)
-2. Implement [Collision Detection](implementation/collision-detection.md)
-3. Follow [Safety Protocols](implementation/safety-protocols.md)
-
-### For Researchers
-1. Review [Research Procedures](workflows/research-procedures.md)
-2. Implement [Data Collection](implementation/data-collection.md)
-3. Setup [Metrics Tracking](implementation/metrics-tracking.md)
+- Open `mr-multiplayer/` in a supported Unity LTS
+- Open `Assets/XRMP/BasicScene.unity` or `Assets/MRTabletopAssets/Games/Chess/Scenes/SlicesChess.unity`
+- Test multiplayer in Editor with Multiplayer Play Mode or ParrelSync; build to Quest 3 for device tests
 
 ## 🔧 Technology Stack Reference
 
-- **Unity Version:** 2022.3+ LTS
-- **Target Platform:** Meta Quest 3 (Android)
-- **VR Framework:** XR Interaction Toolkit 2.5+
-- **Networking:** Unity Netcode for GameObjects 1.7+
-- **Physics:** Unity Physics (Built-in)
-- **Version Control:** Git with Git LFS
+- Unity Editor: LTS supported by template
+- Target Platform: Meta Quest 3 (Android)
+- XR: XR Interaction Toolkit 3.x, XR Hands, AR Foundation, OpenXR + Meta OpenXR
+- Networking: Netcode for GameObjects 2.x, Unity Transport; optional UGS Authentication/Lobby/Relay; Vivox for voice
+- Tools: Unity Multiplayer Tools; optional Multiplayer Play Mode, ParrelSync
 
 ## 📊 Performance Targets
 
-- **Frame Rate:** 90 FPS per headset
-- **Network Latency:** <20ms for avatar synchronization
-- **Memory Usage:** <4GB RAM per headset
-- **Safety Response:** <100ms collision detection response
+- Frame Rate: 90 FPS per headset
+- Network Latency: <20 ms perceived avatar sync
+- Safety Response: <100 ms collision detection response
 
 ## 🏠 Physical Requirements
 
-- **Room Size:** Minimum 2m x 2m per user (3x3m recommended)
-- **Hardware:** 3x Meta Quest 3 headsets
-- **Network:** WiFi 5 (802.11ac) minimum
-- **Setup:** Shared physical space with Guardian boundaries
+- Room: ≥2m x 2m per user (3 users)
+- Hardware: 3x Meta Quest 3
+- Network: Wi‑Fi 5 (802.11ac)+
 
 ## 📚 Additional Resources
 
-- [Main Project README](../README.md) - Project overview and goals
-- [Multi-User VR MVP Guide](../MultiUser-VR-MVP-Guide.md) - Quick implementation guide
-- [Single Headset Testing Guide](../Single-Headset-Testing-Guide.md) - Development testing procedures
-- [WARP Development Guide](../WARP.md) - AI assistant development guidance
-
-## 🔄 Documentation Status
-
-- Navigation: Verified cross-links between Architecture, Implementation, and Workflows
-- Diagrams: Mermaid syntax validated (flowchart, sequence) across architecture pages
-- Code samples: Reviewed for compile readiness against Unity 2022.3 + NGO APIs
-- Paths: Relative links checked from nested directories to root resources
-
-This documentation system supports the complete development lifecycle from initial setup through production deployment. All guides follow established Unity development patterns.
+- [Unity MR Multiplayer Tabletop docs](https://docs.unity3d.com/Packages/com.unity.template.mr-multiplayer@1.0/manual/index.html)
+- [Main Project README](../README.md)
+- [MVP Guide](../MultiUser-VR-MVP-Guide.md)
 
 ---
 
-**Last Updated:** Implementation-documentation spec integration  
-**Target Audience:** Unity VR developers, network programmers, safety engineers, researchers  
-**Maintenance:** Update documentation when implementing new features or changing system architecture
+Last Updated: Template alignment migration

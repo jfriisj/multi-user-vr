@@ -4,7 +4,7 @@
 
 Unity-focused diagrams reflecting the established project conventions and planned structure (Req 1.4, 2.4). These support developer navigation and setup.
 
-## Asset Organization (planned `vr/Assets/`)
+## Asset Organization (`mr-multiplayer/Assets/`)
 ```mermaid
 flowchart TD
   A[Assets/] --> S[Scripts/]
