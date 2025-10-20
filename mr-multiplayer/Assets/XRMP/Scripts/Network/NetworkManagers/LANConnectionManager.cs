@@ -252,69 +252,8 @@ namespace XRMultiplayer
         /// <returns>Local IP address string, or "IP not found" if detection fails</returns>
         public string GetLocalIPAddress()
         {
-            try
-            {
-                // Try to get WiFi interface first (priority for Quest 3)
-                foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-                {
-                    // Look for active WiFi interfaces
-                    if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 && 
-                        ni.OperationalStatus == OperationalStatus.Up)
-                    {
-                        foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
-                        {
-                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork && 
-                                !IPAddress.IsLoopback(ip.Address))
-                            {
-                                Log($"Found WiFi IP address: {ip.Address}");
-                                return ip.Address.ToString();
-                            }
-                        }
-                    }
-                }
-
-                // Fallback: Try any active Ethernet interface
-                foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-                {
-                    if (ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet && 
-                        ni.OperationalStatus == OperationalStatus.Up)
-                    {
-                        foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
-                        {
-                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork && 
-                                !IPAddress.IsLoopback(ip.Address))
-                            {
-                                Log($"Found Ethernet IP address: {ip.Address}");
-                                return ip.Address.ToString();
-                            }
-                        }
-                    }
-                }
-
-                // Last resort: Use any non-loopback IPv4 address
-                foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-                {
-                    if (ni.OperationalStatus == OperationalStatus.Up)
-                    {
-                        foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
-                        {
-                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork && 
-                                !IPAddress.IsLoopback(ip.Address))
-                            {
-                                Log($"Found IP address on {ni.Name}: {ip.Address}");
-                                return ip.Address.ToString();
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogError($"IP Discovery failed: {ex.Message}");
-            }
-
-            LogWarning("No valid IP address found. Please check network settings.");
-            return "IP not found";
+            // Use IPDiscoveryService for robust IP detection
+            return IPDiscoveryService.GetLocalIPAddress();
         }
 
         /// <summary>
@@ -324,18 +263,8 @@ namespace XRMultiplayer
         /// <returns>True if valid IPv4 address format</returns>
         public bool ValidateIPAddress(string ipString)
         {
-            if (string.IsNullOrWhiteSpace(ipString))
-                return false;
-
-            bool isValid = IPAddress.TryParse(ipString, out IPAddress address) && 
-                          address.AddressFamily == AddressFamily.InterNetwork;
-
-            if (!isValid)
-            {
-                LogWarning($"Invalid IP address format: {ipString}");
-            }
-
-            return isValid;
+            // Use IPDiscoveryService for robust IP validation
+            return IPDiscoveryService.ValidateIPAddress(ipString);
         }
 
         /// <summary>
