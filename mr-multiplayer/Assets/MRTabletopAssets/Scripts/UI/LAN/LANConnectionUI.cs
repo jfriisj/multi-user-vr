@@ -139,6 +139,20 @@ namespace UnityEngine.XR.Templates.MRTTabletopAssets
         /// </summary>
         private void OnDestroy()
         {
+            // Remove UI listeners to avoid leaks
+            if (m_ConnectionModeToggle != null)
+                m_ConnectionModeToggle.onValueChanged.RemoveListener(OnConnectionModeToggled);
+
+            if (m_IPAddressInput != null)
+            {
+                m_IPAddressInput.onValueChanged.RemoveListener(OnIPAddressInputChanged);
+                m_IPAddressInput.onEndEdit.RemoveListener(OnIPAddressEndEdit);
+            }
+
+            if (m_HostButton != null) m_HostButton.onClick.RemoveListener(OnHostButtonClicked);
+            if (m_JoinButton != null) m_JoinButton.onClick.RemoveListener(OnJoinButtonClicked);
+            if (m_DisconnectButton != null) m_DisconnectButton.onClick.RemoveListener(OnDisconnectButtonClicked);
+
             UnsubscribeFromEvents();
         }
 
@@ -155,7 +169,7 @@ namespace UnityEngine.XR.Templates.MRTTabletopAssets
             if (m_ConnectionModeToggle != null)
             {
                 m_ConnectionModeToggle.onValueChanged.AddListener(OnConnectionModeToggled);
-                m_ConnectionModeToggle.isOn = (m_ConnectionModeManager.CurrentMode == ConnectionModeManager.ConnectionMode.LANDirect);
+                m_ConnectionModeToggle.SetIsOnWithoutNotify(m_ConnectionModeManager.CurrentMode == ConnectionModeManager.ConnectionMode.LANDirect);
             }
 
             // Setup IP address input

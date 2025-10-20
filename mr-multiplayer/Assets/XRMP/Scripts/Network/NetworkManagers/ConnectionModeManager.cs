@@ -96,6 +96,16 @@ namespace XRMultiplayer
         const string k_DebugPrepend = "<color=#FF6B6B>[Connection Mode Manager]</color> ";
 
         /// <summary>
+        /// Try to refresh cached references when they are missing (e.g., components added after Awake).
+        /// </summary>
+        private void RefreshReferences()
+        {
+            if (m_GameManager == null) m_GameManager = FindFirstObjectByType<XRINetworkGameManager>();
+            if (m_LobbyManager == null) m_LobbyManager = FindFirstObjectByType<LobbyManager>();
+            if (m_LANConnectionManager == null) m_LANConnectionManager = FindFirstObjectByType<LANConnectionManager>();
+        }
+
+        /// <summary>
         /// See <see cref="MonoBehaviour"/>.
         /// </summary>
         private void Awake()
@@ -197,6 +207,9 @@ namespace XRMultiplayer
         /// <param name="forceSwitch">Force mode switch even if already in that mode</param>
         public void SetConnectionMode(ConnectionMode mode, bool forceSwitch = false)
         {
+            // Refresh references in case components were added after Awake
+            RefreshReferences();
+
             // Check if already in this mode
             if (CurrentMode == mode && !forceSwitch)
             {
@@ -237,6 +250,9 @@ namespace XRMultiplayer
         /// <returns>True if mode is available</returns>
         public bool IsModeAvailable(ConnectionMode mode)
         {
+            // Ensure references are up to date when queried
+            RefreshReferences();
+
             switch (mode)
             {
                 case ConnectionMode.Cloud:

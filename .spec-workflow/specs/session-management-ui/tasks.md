@@ -2,7 +2,7 @@
 
 Spec: session-management-ui
 
-- [ ] 1. Wire connection mode toggle in UI and scene
+- [x] 1. Wire connection mode toggle in UI and scene
   - Files: Assets/MRTabletopAssets/Scripts/UI/LobbyList/LobbyUI.cs, Assets/MRTabletopAssets/Scripts/UI/LAN/LANConnectionUI.cs, Assets/XRMP/Scripts/Network/NetworkManagers/ConnectionModeManager.cs
   - Scene/Prefab: Ensure Lobby panel contains a Toggle bound to ConnectionModeManager and a label; confirm LAN sub-panel exists and is mapped via m_ConnectionSubPanels (LANPanelIndex)
   - Ensure mode switch does not reload scene; verify disconnect-before-switch behavior

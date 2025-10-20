@@ -87,7 +87,8 @@ namespace UnityEngine.XR.Templates.MRTTabletopAssets
 
         private void Start()
         {
-            m_PrivacyToggle.onValueChanged.AddListener(TogglePrivacy);
+            if (m_PrivacyToggle != null)
+                m_PrivacyToggle.onValueChanged.AddListener(TogglePrivacy);
 
             m_PlayerCount = XRINetworkGameManager.maxPlayers;
 
@@ -98,13 +99,14 @@ namespace UnityEngine.XR.Templates.MRTTabletopAssets
             if (m_ConnectionModeToggle != null)
             {
                 m_ConnectionModeToggle.onValueChanged.AddListener(OnConnectionModeToggleChanged);
-                
-                // Initialize toggle state based on current mode
-                m_ConnectionModeToggle.isOn = (m_CurrentMode == ConnectionModeManager.ConnectionMode.LANDirect);
+
+                // Initialize toggle state based on current mode without invoking callback
+                m_ConnectionModeToggle.SetIsOnWithoutNotify(m_CurrentMode == ConnectionModeManager.ConnectionMode.LANDirect);
             }
 
-            // Update mode label
+            // Update mode label and panels
             UpdateConnectionModeLabel();
+            UpdateUIForConnectionMode();
 
             foreach (Transform t in m_LobbyListParent)
             {
@@ -133,6 +135,16 @@ namespace UnityEngine.XR.Templates.MRTTabletopAssets
             if (m_ConnectionModeManager != null)
             {
                 m_ConnectionModeManager.OnModeChanged -= OnConnectionModeChanged;
+            }
+
+            // Remove UI listeners to avoid leaks
+            if (m_ConnectionModeToggle != null)
+            {
+                m_ConnectionModeToggle.onValueChanged.RemoveListener(OnConnectionModeToggleChanged);
+            }
+            if (m_PrivacyToggle != null)
+            {
+                m_PrivacyToggle.onValueChanged.RemoveListener(TogglePrivacy);
             }
         }
 
