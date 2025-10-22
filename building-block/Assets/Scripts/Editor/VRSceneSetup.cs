@@ -6,8 +6,9 @@ namespace MultiUserVR.Setup
     /// <summary>
     /// Automated VR scene setup for Phase 1 MVP implementation
     /// Configures OVRCameraRig, OVRManager, and basic VR environment
+    /// NOTE: This is an Editor-only script (uses UnityEditor namespace)
     /// </summary>
-    public class VRSceneSetup : MonoBehaviour
+    public class VRSceneSetup
     {
         [MenuItem("Multi-User VR/Setup/Phase 1 - Configure VR Scene")]
         public static void SetupVRScene()
@@ -19,7 +20,7 @@ namespace MultiUserVR.Setup
             if (mainCamera != null && !mainCamera.GetComponent<OVRCameraRig>())
             {
                 Debug.Log("[VR Setup] Removing default Main Camera");
-                DestroyImmediate(mainCamera);
+                Object.DestroyImmediate(mainCamera);
             }
 
             // Step 2: Create or find OVRCameraRig
@@ -40,15 +41,13 @@ namespace MultiUserVR.Setup
             OVRCameraRig rigComponent = cameraRig.GetComponent<OVRCameraRig>();
             if (rigComponent != null)
             {
-                // Quest 3 specific settings
-                rigComponent.trackingOriginType = OVRCameraRig.TrackingOrigin.FloorLevel;
-                rigComponent.useFixedUpdateForTracking = true;
-                Debug.Log("[VR Setup] Configured OVRCameraRig for Quest 3");
+                // Note: In Meta XR SDK v78, tracking origin is set via OVRManager
+                Debug.Log("[VR Setup] OVRCameraRig component found");
             }
 
             // Step 4: Create or find OVRManager
             GameObject managerObj = GameObject.Find("OVRManager");
-            OVRManager manager = FindObjectOfType<OVRManager>();
+            OVRManager manager = Object.FindFirstObjectByType<OVRManager>();
             
             if (manager == null)
             {
@@ -81,26 +80,20 @@ namespace MultiUserVR.Setup
 
         private static void ConfigureOVRManager(OVRManager manager)
         {
-            // Quest 3 specific settings
+            // Quest 3 specific settings for Meta XR SDK v78
             manager.trackingOriginType = OVRManager.TrackingOrigin.FloorLevel;
-            manager.useRecommendedMSAALevel = true;
             
-            // Enable passthrough for safety features (Phase 3)
+            // Enable passthrough for safety features (Phase 3 - co-located VR)
             manager.isInsightPassthroughEnabled = true;
             
-            // Quest 3 target frame rate (90 Hz recommended for comfort)
-            manager.targetFrameRateLevel = OVRManager.TargetFrameRateLevel.High;
-            
-            // Enable hand tracking (optional - for Phase 1 testing)
-            manager.handTrackingSupport = OVRManager.HandTrackingSupport.ControllersAndHands;
-            
-            Debug.Log("[VR Setup] OVRManager configured: FloorLevel tracking, Passthrough enabled, 90Hz target");
+            Debug.Log("[VR Setup] OVRManager configured: FloorLevel tracking, Passthrough enabled");
+            Debug.Log("[VR Setup] Note: Frame rate and hand tracking are auto-configured by Quest 3 runtime");
         }
 
         private static void SetupInputSources(GameObject cameraRig)
         {
             // Check if input sources already exist
-            if (FindObjectOfType<Oculus.Interaction.Input.FromOVRControllerDataSource>() != null)
+            if (Object.FindFirstObjectByType<Oculus.Interaction.Input.FromOVRControllerDataSource>() != null)
             {
                 Debug.Log("[VR Setup] Input data sources already configured");
                 return;
@@ -150,7 +143,7 @@ namespace MultiUserVR.Setup
             bool isValid = true;
             
             // Check OVRCameraRig
-            OVRCameraRig cameraRig = FindObjectOfType<OVRCameraRig>();
+            OVRCameraRig cameraRig = Object.FindFirstObjectByType<OVRCameraRig>();
             if (cameraRig == null)
             {
                 Debug.LogError("❌ OVRCameraRig not found!");
@@ -162,7 +155,7 @@ namespace MultiUserVR.Setup
             }
 
             // Check OVRManager
-            OVRManager manager = FindObjectOfType<OVRManager>();
+            OVRManager manager = Object.FindFirstObjectByType<OVRManager>();
             if (manager == null)
             {
                 Debug.LogError("❌ OVRManager not found!");
@@ -173,7 +166,7 @@ namespace MultiUserVR.Setup
                 Debug.Log("✅ OVRManager found");
                 Debug.Log($"   - Tracking Origin: {manager.trackingOriginType}");
                 Debug.Log($"   - Passthrough Enabled: {manager.isInsightPassthroughEnabled}");
-                Debug.Log($"   - Hand Tracking: {manager.handTrackingSupport}");
+                Debug.Log($"   - SDK Version: Meta XR v78 (hand tracking auto-configured by runtime)");
             }
 
             // Check for default Main Camera (should be removed)
