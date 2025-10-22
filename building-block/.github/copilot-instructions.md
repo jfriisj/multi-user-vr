@@ -1,118 +1,239 @@
-# Multi-User VR System Development Instructions
+# Co-Located Multi-User VR System - AI Agent Instructions
 
-## Project Overview
-This is a Unity 6 project for developing an MVP of a co-located multi-user VR system enabling 3 Meta Quest 3 users to safely share the same physical room while collaborating in VR. The key differentiator is **physical safety** - preventing real-world collisions between users in shared space.
+## Project Context
 
-## Core Architecture Requirements
+This is a **Unity VR project** developing an MVP for **3 Meta Quest 3 headsets sharing the same physical room**. The unique challenge is co-located VR where users occupy the same physical space while immersed in a shared virtual environment—unlike traditional remote multi-user VR.
 
-### Primary Safety-First Philosophy
-- **Physical safety is paramount** - never compromise on collision prevention systems
-- All networking and VR systems must prioritize real-world safety over performance
-- Implement multiple redundant safety systems and graceful degradation patterns
-- Emergency stop mechanisms must be accessible and reliable
+**Critical Safety Requirement**: Physical collision prevention is the #1 priority. Users cannot see each other in VR but share the same physical space.
 
-### Essential Components to Implement
-Based on `MVP_DEVELOPMENT_PROMPT.md`, implement these core systems:
+## Architecture Overview
+
+### Core Technology Stack
+- **Unity 6000.2.3f1** (Unity 6) with URP pipeline
+- **Meta XR All-in-One SDK v78.0.0** - Complete VR framework
+- **Unity MCP (Model Context Protocol) v0.20.0** - AI-Unity bridge for development
+- **Target Platform**: Meta Quest 3 (Android standalone builds)
+- **Networking**: Unity Netcode for GameObjects (NOT YET INSTALLED - high priority)
+
+### Meta XR SDK Package Structure
+The project uses Meta's modular SDK architecture (all v78.0.0):
+- `com.meta.xr.sdk.core` - OVRCameraRig, OVRManager, passthrough, tracking
+- `com.meta.xr.sdk.interaction` - Hand/controller input, grabbing, locomotion
+- `com.meta.xr.sdk.platform` - **CRITICAL for MVP**: LocalMatchmaking, ColocationController
+- `com.meta.xr.mrutilitykit` - **CRITICAL for safety**: MRUK, RoomGuardian, spatial awareness
+- `com.meta.xr.sdk.haptics` - Advanced haptics (optional)
+- `com.meta.xr.sdk.audio` - Spatial audio (optional)
+- `com.meta.xr.simulator` - Editor testing without device
+
+## Development Workflows
+
+### Unity MCP Integration
+This project uses **Unity MCP server** for AI-assisted development. Access via:
+- **Window > AI Connector (Unity-MCP)** in Unity Editor
+- Server binaries in `Library/mcp-server/` (platform-specific)
+- All MCP tools available through connected AI clients (Claude, Copilot, Cursor)
+
+**Key MCP Tools for this project**:
+```bash
+# Component discovery
+mcp_unity-mcp_Component_GetAll search:"Meta"
+mcp_unity-mcp_Component_GetAll search:"OVR"
+
+# Scene hierarchy inspection
+mcp_unity-mcp_Scene_GetHierarchy
+
+# GameObject manipulation
+mcp_unity-mcp_GameObject_Find
+mcp_unity-mcp_GameObject_Create
+mcp_unity-mcp_GameObject_Modify
+
+# Asset management
+mcp_unity-mcp_Assets_Find filter:"t:Prefab"
+mcp_unity-mcp_Assets_Find filter:"t:Scene"
+```
+
+### Building for Quest 3
+1. **Build Target**: Android (Meta Quest 3 uses Android OS)
+2. **XR Plugin Management**: OpenXR + Meta XR Plugin
+3. **Build Location**: `building-block/` folder (workspace root)
+4. No build scripts yet - manual builds via Unity Build Settings
+
+### Testing Approach
+- **Editor Testing**: Use Meta XR Simulator for single-user testing
+- **Device Testing**: Requires 3 physical Quest 3 headsets for colocation validation
+- **No automated tests yet** - Test framework installed but no test coverage
+
+## Critical MVP Components (Phase-Ordered)
+
+### Phase 1: Foundation (Weeks 1-2)
+**Must implement**:
+- `OVRCameraRig` + `OVRManager` setup in main scene
+- `FromOVRHandDataSource` / `FromOVRControllerDataSource` for input
+- Basic player prefab with tracking
+
+### Phase 2: Networking & Colocation (Weeks 3-4) 
+**Must implement** (highest complexity):
 ```csharp
-// Critical MVP Components (in priority order):
-- VRNetworkManager (Unity Netcode for GameObjects) 
-- UserTrackingSystem (XR Interaction Toolkit)
-- CollisionPreventionSystem (Custom safety system)
-- BasicAvatarController (Real-time position sync)
-- SafetyManager (Emergency protocols)
+// Meta Platform SDK components
+LocalMatchmaking              // Auto-discover 3 Quest devices on LAN
+ColocationController          // Manage shared physical space session
+SharedSpatialAnchorCore       // THE KEY: synchronize coordinate systems
+AlignCameraToAnchor          // Position each user's camera relative to shared anchor
+ColocationSessionEventHandler // Connection status
 ```
 
-## Technical Stack & Dependencies
+**Critical workflow**: Host creates spatial anchor → Other users discover via LocalMatchmaking → All align to same anchor → Physical coordinates synchronized
 
-### VR Framework
-- **Meta Quest 3 SDK** v78.0.0 (com.meta.xr.sdk.all) - Primary VR platform
-- **Unity XR OpenXR** v1.16.0 - Cross-platform XR management
-- No XR Interaction Toolkit installed yet - **add when implementing interaction systems**
-- No Unity Netcode for GameObjects installed yet - **add when implementing networking**
+**Missing dependency**: Install `com.unity.netcode.gameobjects` for gameplay networking (position sync, object states, RPCs). Meta Platform SDK handles discovery/colocation only.
 
-### AI Development Integration
-- **Unity-MCP Server** v0.20.0 - AI coding assistant integration via Model Context Protocol
-- MCP server runs at `Library/mcp-server/win-x64/unity-mcp-server.exe`
-- Configuration in `.vscode/mcp.json` and `Assets/Resources/Unity-MCP-ConnectionConfig.json`
-- Use MCP tools for rapid prototyping and AI-assisted development
-
-### Performance Requirements
-- Maintain 90fps on all 3 Quest 3 headsets simultaneously
-- <50ms network latency between headsets  
-- <100ms safety system response time
-- <2cm position tracking accuracy per headset
-
-## Development Workflow
-
-### Phase-Based Implementation (8-week MVP)
-```
-Week 1-2: Foundation Setup (single headset VR environment)
-Week 3-4: Networking & Sync (2-3 headset synchronization) 
-Week 5-6: Safety & Polish (collision prevention, warnings)
-Week 7-8: Validation & Documentation (testing, benchmarks)
-```
-
-### Essential Packages to Add
-When implementing networking: `com.unity.netcode.gameobjects`
-When implementing interactions: `com.unity.xr.interaction.toolkit`
-For input handling: Unity Input System already installed (v1.14.2)
-
-### Safety Testing Protocols
-- Test tracking interference with multiple Quest 3 headsets
-- Measure minimum safe distances between users  
-- Validate collision detection accuracy in different lighting
-- Benchmark network stability over 30+ minute sessions
-
-## Key File Locations
-
-### Configuration Files
-- `Assets/Resources/Unity-MCP-ConnectionConfig.json` - AI assistant settings
-- `ProjectSettings/XRSettings.asset` - VR configuration
-- `Packages/manifest.json` - Package dependencies
-- `MVP_DEVELOPMENT_PROMPT.md` - Complete project requirements and success metrics
-
-### Scenes & Assets  
-- `Assets/Scenes/SampleScene.unity` - Main development scene
-- `Assets/XR/` - XR-specific settings and configurations
-- Multiple XR settings folders suggest multi-device testing setup
-
-## Development Conventions
-
-### Safety-First Code Patterns
+### Phase 3: Safety Systems (Weeks 5-6)
+**Must implement** (safety-critical):
 ```csharp
-// Always implement safety checks first
-if (!SafetyManager.Instance.IsUserPositionSafe(userPosition))
-{
-    TriggerEmergencyStop();
-    return;
-}
-
-// Graceful degradation for network issues
-if (networkLatency > MAX_SAFE_LATENCY)
-{
-    FallbackToLocalMode();
-}
+// Meta MR Utility Kit components  
+MRUK                    // Main MR manager for room understanding
+MRUKRoom                // Room boundary and layout data
+RoomGuardian            // Boundary enforcement - prevents users from colliding
+OVRPassthroughLayer     // Emergency "see-through" mode
 ```
 
-### VR-Specific Considerations
-- Use local network setup (same Wi-Fi) for minimal latency
-- Implement Guardian boundary awareness and respect
-- Test with actual Quest 3 hardware, not simulators
-- Account for battery life optimization (1-2 hour sessions)
+**Safety pattern**: Continuously monitor all 3 `OVRCameraRig` positions → Calculate inter-user distances → Activate warnings/passthrough when users approach collision threshold.
 
-### AI-Assisted Development
-- Leverage Unity-MCP for rapid prototyping of VR components
-- Use MCP tools for automated testing and validation
-- AI can help with reflection-based component manipulation
-- Custom MCP tools can be added in project for domain-specific tasks
+## Project-Specific Conventions
 
-## Critical Success Metrics
-- Zero physical collisions during testing
-- 3 users can collaborate safely for 30+ minutes
-- <5 minute setup time from start to collaborative experience  
-- Real-time movement sync with no noticeable lag
+### Scene Structure
+- **Primary Scene**: `Assets/Scenes/SampleScene.unity` (default Unity scene, not yet configured)
+- **Expected structure**: No multiplayer scenes exist yet - MVP development just starting
 
-## Scope Limitations
-Out of MVP scope: Advanced haptic feedback, complex AI features, cloud networking, advanced avatar customization, voice chat (use Quest's built-in), eye tracking.
+### Namespace Patterns for Meta XR
+When searching for components, use these namespace prefixes:
+- `Meta.XR.MultiplayerBlocks.*` - Colocation, matchmaking, multiplayer
+- `Meta.XR.MRUtilityKit.*` - Room understanding, safety, spatial awareness
+- `Meta.XR.BuildingBlocks.*` - Pre-built VR systems
+- `Oculus.Interaction.*` - Input, hand tracking, locomotion
+- `OVR*` - Core VR functionality (camera, manager, tracking)
 
-Focus on core safety and collaboration functionality first.
+### Asset Organization (Planned)
+```
+Assets/
+├── Scripts/
+│   ├── Networking/        # Unity Netcode components (not yet created)
+│   ├── Safety/            # Collision prevention system (not yet created)
+│   ├── VR/                # Player controllers, avatars (not yet created)
+├── Prefabs/
+│   ├── Player/            # Player rig with Meta XR components (not yet created)
+├── Scenes/
+│   └── SampleScene.unity  # Default scene - needs VR configuration
+```
+
+## Integration Points
+
+### Meta XR Building Blocks
+Access via **Window > Meta XR > Tools > Building Blocks**:
+- Add pre-configured prefabs for common VR features
+- Recommended for MVP: Spatial Anchor Core, Local Matchmaking, Colocation, Room Mesh Controller
+
+### Unity Multiplayer Center
+- Package installed: `com.unity.multiplayer.center` v1.0.0
+- Use to add Unity Netcode for GameObjects package
+- Access via **Window > Multiplayer > Multiplayer Center**
+
+### OpenUPM Registry
+Custom package source configured for Unity MCP and dependencies:
+- Registry: `https://package.openupm.com`
+- See `Packages/manifest.json` for scopes
+
+## Known Constraints
+
+### Project Path Limitation
+**CRITICAL**: Unity MCP requires project path **without spaces**
+- ✅ Current: `c:\github\multi-user-vr\building-block`
+- ❌ Would fail: `c:\my projects\building-block`
+
+### Networking Gap
+**Unity Netcode for GameObjects NOT installed yet** - This is a high-priority blocker for Phase 2 networking implementation. Meta Platform SDK provides matchmaking/colocation but NOT gameplay synchronization.
+
+### No Custom Code Yet
+The project has ZERO custom VR/networking scripts. All current C# files are from:
+- Unity tutorial boilerplate (`Assets/TutorialInfo/`)
+- Unity MCP installer (`Assets/com.IvanMurzak/AI Game Dev Installer/`)
+
+## Development Priorities (MVP Roadmap)
+
+**Week 1-2**: VR Foundation
+1. Configure `SampleScene.unity` with `OVRCameraRig`
+2. Test single-user VR in Meta XR Simulator
+3. Create basic player prefab with hand tracking
+
+**Week 3-4**: Networking & Colocation
+1. Install Unity Netcode for GameObjects via Multiplayer Center
+2. Implement `LocalMatchmaking` + `ColocationController`
+3. Set up `SharedSpatialAnchorCore` workflow
+4. Test with 2-3 physical Quest 3 headsets
+
+**Week 5-6**: Safety Systems
+1. Integrate `MRUK` + `RoomGuardian`
+2. Build collision detection using `OVRCameraRig` positions
+3. Implement visual/haptic warnings
+4. Add emergency `OVRPassthroughLayer` activation
+
+**Week 7-8**: Polish & Validation
+1. Performance optimization
+2. Use case demonstrations
+3. Safety testing with 3 concurrent users
+
+## Quick Reference: Essential Meta XR Components
+
+```csharp
+// VR Core (Essential for all scenes)
+OVRCameraRig                     // Main VR camera with tracked controllers
+OVRManager                       // Core VR system manager
+
+// Colocation (Critical for multi-user)
+LocalMatchmaking                 // Discover nearby Quest devices
+ColocationController             // Manage shared space session
+SharedSpatialAnchorCore          // Shared coordinate system anchor
+AlignCameraToAnchor             // Align user to shared anchor
+
+// Safety (Critical for collision prevention)
+MRUK                            // Mixed Reality Utility Kit manager
+MRUKRoom                        // Room boundaries and layout
+RoomGuardian                    // Safety boundary enforcement
+OVRPassthroughLayer             // See real world through headset
+
+// Input (Essential for interaction)
+FromOVRHandDataSource           // Hand tracking input
+FromOVRControllerDataSource     // Controller input
+HandGrabInteractor              // Grab with hands
+RayInteractor                   // Point and select
+```
+
+## When Writing Code
+
+### Preferred Patterns
+- Use Meta XR SDK components over custom implementations where available
+- Always access Unity API from main thread when using MCP tools
+- Leverage Meta XR Building Blocks for rapid prototyping
+
+### Safety-First Design
+- Every networking feature must consider physical collision scenarios
+- Validate all 3 users' positions continuously during runtime
+- Graceful degradation: system should fail safely, activating passthrough mode
+
+### Component Discovery
+Use MCP tools to discover available components before implementing custom solutions:
+```bash
+mcp_unity-mcp_Component_GetAll search:"Grab"      # Find grabbing components
+mcp_unity-mcp_Component_GetAll search:"Teleport"  # Find locomotion components
+```
+
+Over 300+ Meta XR components available - search before building from scratch.
+
+## Documentation References
+- **MVP Requirements**: `MVP_DEVELOPMENT_PROMPT.md` (primary design document)
+- **Meta XR Docs**: https://developer.oculus.com/documentation/unity/
+- **Unity MCP Tools**: Use MCP component discovery tools to explore SDK
+- **Project README**: Located at repository root (outside building-block workspace)
+
+---
+
+**Remember**: This is a SAFETY-CRITICAL application where users share physical space while immersed in VR. Collision prevention is not optional—it's the core technical challenge of co-located VR.
