@@ -147,7 +147,7 @@ namespace XRMultiplayer
             }
 
             // Reject common invalid characters for strict validation
-            if (ipString.IndexOfAny(new[] { ' ', '\\n', '\\r', '\\t', ':', '/' }) >= 0)
+            if (ipString.IndexOfAny(new[] { ' ', '\n', '\r', '\t', ':', '/' }) >= 0)
             {
                 LogWarning($"Failed to parse IP address: {ipString}");
                 return false;

@@ -24,17 +24,29 @@ namespace UnityEngine.XR.Templates.MRTTabletopAssets
 
         public Transform GetSeat(int seatIdx)
         {
+            if (m_Seats == null || m_Seats.Length == 0)
+                return null;
+                
             if (seatIdx <= -1)
                 return m_Seats[0].seatTransform;
+
+            if (seatIdx >= m_Seats.Length)
+                return null;
 
             return m_Seats[seatIdx].seatTransform;
         }
 
         void OnValidate()
         {
+            if (m_Seats == null)
+                return;
+                
             foreach (TableSeat seat in m_Seats)
             {
-                seat.seatTransform.localPosition = -seat.seatTransform.forward * m_SeatDistance;
+                if (seat.seatTransform != null)
+                {
+                    seat.seatTransform.localPosition = -seat.seatTransform.forward * m_SeatDistance;
+                }
             }
         }
     }
