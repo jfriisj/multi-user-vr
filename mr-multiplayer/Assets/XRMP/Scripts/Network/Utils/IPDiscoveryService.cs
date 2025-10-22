@@ -129,12 +129,12 @@ namespace XRMultiplayer
         public static string GetLocalIPAddress()
         {
             var result = GetLocalIPAddressDetailed();
-            return result.success ? result.ipAddress : "IP not found";
+            return result.success ? result.ipAddress : null;
         }
 
         /// <summary>
         /// Validates an IP address string format.
-        /// Ensures it's a valid IPv4 address.
+        /// Ensures it's a valid IPv4 address (syntax only; allows loopback and boundary values).
         /// </summary>
         /// <param name="ipString">IP address string to validate</param>
         /// <returns>True if valid IPv4 address format</returns>
@@ -146,31 +146,43 @@ namespace XRMultiplayer
                 return false;
             }
 
-            // Try to parse as IP address
-            if (!IPAddress.TryParse(ipString, out IPAddress address))
+            // Reject common invalid characters for strict validation
+            if (ipString.IndexOfAny(new[] { ' ', '\\n', '\\r', '\\t', ':', '/' }) >= 0)
             {
                 LogWarning($"Failed to parse IP address: {ipString}");
                 return false;
             }
 
-            // Ensure it's IPv4
-            if (address.AddressFamily != AddressFamily.InterNetwork)
+            // Strictly require four IPv4 octets [0-255]
+            var parts = ipString.Split('.');
+            if (parts.Length != 4)
             {
-                LogWarning($"IP address is not IPv4: {ipString}");
+                LogWarning($"Failed to parse IP address: {ipString}");
                 return false;
             }
 
-            // Additional validation: not loopback, not zero
-            if (IPAddress.IsLoopback(address))
+            for (int i = 0; i < 4; i++)
             {
-                LogWarning($"IP address is loopback: {ipString}");
-                return false;
-            }
-
-            if (address.Equals(IPAddress.Any) || address.Equals(IPAddress.None))
-            {
-                LogWarning($"IP address is invalid (0.0.0.0 or 255.255.255.255): {ipString}");
-                return false;
+                var part = parts[i];
+                if (string.IsNullOrEmpty(part))
+                {
+                    LogWarning($"Failed to parse IP address: {ipString}");
+                    return false;
+                }
+                // Digits only
+                for (int c = 0; c < part.Length; c++)
+                {
+                    if (!char.IsDigit(part[c]))
+                    {
+                        LogWarning($"Failed to parse IP address: {ipString}");
+                        return false;
+                    }
+                }
+                if (!int.TryParse(part, out int value) || value < 0 || value > 255)
+                {
+                    LogWarning($"Failed to parse IP address: {ipString}");
+                    return false;
+                }
             }
 
             return true;

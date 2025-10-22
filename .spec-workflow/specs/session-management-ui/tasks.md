@@ -1,4 +1,4 @@
-# Tasks Document
+feat# Tasks Document
 
 Spec: session-management-ui
 
@@ -10,7 +10,7 @@ Spec: session-management-ui
   - _Requirements: R1, Constraints (toggle without restart)_
   - _Prompt: Implement the task for spec session-management-ui, first run spec-workflow-guide to get the workflow guide then implement the task: Role: Unity XR/NGO UI Engineer | Task: Bind a UI Toggle to ConnectionModeManager so users can switch Cloud/LAN without scene reload; ensure correct sub-panel activation and label updates; verify event subscriptions and unsubscriptions | Restrictions: Do not duplicate mode logic in UI; use ConnectionModeManager events; avoid GC allocations in hot paths | _Leverage: LobbyUI.cs, LANConnectionUI.cs, ConnectionModeManager.cs | _Requirements: R1, toggle without restart | Success: Toggle switches modes instantly; UI panels/labels update; no leaks; switching while disconnected is safe; logs show mode change | Tools: Assets_Find, Script_Read, Script_CreateOrUpdate, Assets_Modify, Scene_GetHierarchy, Editor_Selection_Get, Assets_Refresh, Console_GetLogs, TestRunner_Run
 
-- [ ] 2. Prominent in-session Disconnect/Leave control
+- [x] 2. Prominent in-session Disconnect/Leave control
   - Files: LANConnectionUI.cs, LobbyUI.cs, XRINetworkGameManager.cs, ConnectionModeManager.cs
   - Add a persistent, prominent Disconnect button visible during Connected; route to ConnectionModeManager.Disconnect()
   - Ensure disconnect completes <5s and UI returns to lobby panel; show status "Disconnecting..."
