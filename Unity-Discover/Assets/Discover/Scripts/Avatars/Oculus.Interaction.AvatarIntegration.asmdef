@@ -1,0 +1,34 @@
+{
+    "name": "Oculus.Interaction.AvatarIntegration",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a92702ab18a2c37469cf92d0212e2d5a",
+        "GUID:2a230cb87a1d3ba4a98bdc0ddae76e6c",
+        "GUID:f64c9ebcd7899c3448a08dc9f9ddbe30"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.xr.management",
+            "expression": "",
+            "define": "USING_XR_MANAGEMENT"
+        },
+        {
+            "name": "com.unity.xr.oculus",
+            "expression": "",
+            "define": "USING_XR_SDK_OCULUS"
+        },
+        {
+            "name": "com.unity.xr.openxr",
+            "expression": "",
+            "define": "USING_XR_SDK_OPENXR"
+        }
+    ],
+    "noEngineReferences": false
+}

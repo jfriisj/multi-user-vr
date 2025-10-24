@@ -1,0 +1,88 @@
+fileFormatVersion: 2
+guid: d42594000bed8de429fd22c181be00ab
+PluginImporter:
+  externalObjects: {}
+  serializedVersion: 3
+  iconMap: {}
+  executionOrder: {}
+  defineConstraints: []
+  isPreloaded: 0
+  isOverridable: 0
+  isExplicitlyReferenced: 0
+  validateReferences: 1
+  platformData:
+    Android:
+      enabled: 0
+      settings:
+        CPU: ARMv7
+    Any:
+      enabled: 0
+      settings:
+        Exclude Android: 1
+        Exclude Editor: 1
+        Exclude Linux64: 1
+        Exclude OSXUniversal: 1
+        Exclude PS4: 0
+        Exclude PS5: 0
+        Exclude Switch: 0
+        Exclude WebGL: 1
+        Exclude Win: 1
+        Exclude Win64: 1
+        Exclude WindowsStoreApps: 1
+        Exclude iOS: 0
+        Exclude tvOS: 1
+    Editor:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+        DefaultValueInitialized: true
+        OS: AnyOS
+    Linux64:
+      enabled: 0
+      settings:
+        CPU: None
+    OSXUniversal:
+      enabled: 0
+      settings:
+        CPU: None
+    PS4:
+      enabled: 1
+      settings: {}
+    PS5:
+      enabled: 1
+      settings: {}
+    Switch:
+      enabled: 1
+      settings: {}
+    Win:
+      enabled: 0
+      settings:
+        CPU: None
+    Win64:
+      enabled: 0
+      settings:
+        CPU: None
+    WindowsStoreApps:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+        DontProcess: false
+        PlaceholderPath: 
+        SDK: UWP
+        ScriptingBackend: Il2Cpp
+    iOS:
+      enabled: 1
+      settings:
+        AddToEmbeddedBinaries: false
+        CPU: AnyCPU
+        CompileFlags: 
+        FrameworkDependencies: 
+    tvOS:
+      enabled: 0
+      settings:
+        CPU: AnyCPU
+        CompileFlags: 
+        FrameworkDependencies: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
