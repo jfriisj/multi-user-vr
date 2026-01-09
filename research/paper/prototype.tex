@@ -1,10 +1,6 @@
 \section{Experimental Prototype}
 
-<<<<<<< HEAD
 The implementation of the 3-user co-located VR training system, specifically the "Shooting Game" scenario developed for this study. Designed as a representative proxy for professional collaborative training tasks, the application places three co-located users in a shared virtual arena where they must coordinate to neutralize waves of aerial drones. This scenario was chosen to place significant demands on the system's networking and spatial alignment capabilities.
-=======
-The implementation of the 3-user co-located VR training system, specifically the "Shooting Game" scenario developed for this study. Designed as a representative proxy for professional collaborative training tasks, the application places three co-located users in a shared virtual arena where they must coordinate to neutralize waves of aerial drones. This scenario was chosen to impose significant demands on the system's networking and spatial alignment capabilities.
->>>>>>> 32df077fa8bbb82b5374f4992fe0114abd8167f7
 
 \subsection{Hardware Configuration}
 
@@ -22,11 +18,8 @@ The system is built on Unity 6000.0.62f1 using the Universal Render Pipeline (UR
 \subsubsection{Key Components}
 The \textit{ShootingGame} scene integrates several core components (see Fig. \ref{fig:architecture}). The \textbf{Colocation} system handles the spatial alignment of multiple users by utilizing Meta's Shared Spatial Anchors\cite{MetaSharedSpatialAnchors2025} to establish a common coordinate system. The \textbf{Network Manager} oversees the local session, while the \textbf{Shooting Game Manager} orchestrates the game logic and a \textbf{Spawn Manager} handles the dynamic spawning of targets (drones).
 
-<<<<<<< HEAD
 Networking and shared object synchronization are implemented using Photon Fusion 2\cite{PhotonFusionDocs,MetaMultiplayerBuildingBlocks2025}, enabling replicated avatars and gameplay objects through \texttt{NetworkBehaviour} components and RPC messaging.
 
-=======
->>>>>>> 32df077fa8bbb82b5374f4992fe0114abd8167f7
 
 
 \subsection{Scene Implementation: Shooting Game}
@@ -38,17 +31,12 @@ The primary experimental scenario for the experiment is a Shooting Game, designe
 The virtual environment consists of a central \texttt{Arena} structure that serves as the shared physical reference point. Users are physically co-located around this virtual arena, allowing them to see and interact with the same virtual targets from different physical perspectives.
 
 \subsubsection{Gameplay Mechanics}
-<<<<<<< HEAD
 Players collaborate to shoot drone targets spawned by the \textit{Spawn Manager}. The \textit{Shooting Game Manager} coordinates the round loop for spawning waves, tracking progression, and restart conditions. This creates real-time rendering and interaction load while preserving shared spatial alignment across headsets.
-=======
-Players collaborate to shoot drone targets spawned by the \textit{Spawn Manager}. The \textit{Shooting Game Manager} coordinates the round loop for spawning waves, tracking progression, and restart conditions. This imposes real-time rendering and interaction load while preserving shared spatial alignment across headsets.
->>>>>>> 32df077fa8bbb82b5374f4992fe0114abd8167f7
 
 
 \subsection{Spatial Colocation}
 \label{sec:prototype-colocation}
 
-<<<<<<< HEAD
 The system established a shared coordinate system across three Meta Quest 3 headsets by creating a host-defined spatial anchor and distributing it via the OVR Colocation Discovery API\cite{MetaColocationDiscovery2025}. In our implementation, the host advertises a local session (producing a group UUID) and places the anchor at the host headset's current position projected to the ground plane. Guest headsets perform nearby session discovery, load the shared anchor group, and localize the received unbound anchor before binding it to a scene object. Once localized, each guest aligns its tracking space/camera rig to the anchor transform, resulting in a consistent placement of the arena and interactive content across devices.
 For operational robustness, the implementation includes explicit discovery timing/timeout handling and logs the discovery and localization durations for debugging and repeatability.
 
@@ -58,11 +46,6 @@ For operational robustness, the implementation includes explicit discovery timin
 \label{fig:shared_space}
 \end{figure}
 
-=======
-The system established a shared coordinate system across three Meta Quest 3 headsets by creating a host-defined spatial anchor and distributing it via the OVR Colocation Discovery API\cite{MetaColocationDiscovery2025}. In our implementation, the host advertises a local session (yielding a group UUID) and places the anchor at the host headset's current position projected to the ground plane. Guest headsets perform nearby session discovery, load the shared anchor group, and localize the received unbound anchor before binding it to a scene object. Once localized, each guest aligns its tracking space/camera rig to the anchor transform, resulting in a consistent placement of the arena and interactive content across devices.
-For operational robustness, the implementation includes explicit discovery timing/timeout handling and logs the discovery and localization durations for debugging and repeatability.
-
->>>>>>> 32df077fa8bbb82b5374f4992fe0114abd8167f7
 % % PLACEHOLDER FOR SCREENSHOT
 % \begin{figure}[htbp]
 % % Erstat 'game_screenshot.png' med dit filnavn
@@ -76,7 +59,6 @@ The game follows a simple, repeatable loop designed for continuous data collecti
 
 \subsection{Calibration Protocol}
 
-<<<<<<< HEAD
 The system employs an automated spatial anchor alignment procedure. First, the host device creates a spatial anchor at the center of the physical play area. This anchor is then shared via the OVR Colocation Discovery API\cite{MetaColocationDiscovery2025} and loaded as a Shared Spatial Anchor\cite{MetaSharedSpatialAnchors2025}. Finally, guest devices discover the shared anchor and align their Unity coordinate system to match the host's, ensuring the arena and all game objects appear in the exact same physical location for everyone.
 
 \subsection{Data Collection}
@@ -85,14 +67,6 @@ A custom \texttt{MetricsLogger} component is included in the scene to capture re
 This logging pipeline allows sampling at 1Hz to support long-duration evaluation without external instrumentation. Each headset writes a per-session CSV file containing: session identifier, headset identifier, participant count, timestamp, frame rate, network latency (RTT), calibration error, battery temperature, battery level, and runtime state (host/client/not connected). In addition, a JSON metadata file is generated per session to capture device and runtime context (device model/name, Unity/app version, start/end time, duration, and total samples). To reduce data loss during long runs, logs are periodically flushed to disk and also persisted on application pause/quit; an optional on-headset debug overlay provides live visibility of the same key metrics during testing.
 
 In our implementation, network latency is sampled from Photon Fusion's RTT and converted to milliseconds\cite{PhotonFusionDocs}. Participant count is recorded from the Fusion session's reported player count.
-=======
-The system employs an automated spatial anchor alignment procedure. First, the host device creates a spatial anchor at the center of the physical play area. This anchor is then shared via the OVR Colocation Discovery API\cite{MetaColocationDiscovery2025} and loaded as a Shared Spatial Anchor\cite{MetaSharedSpatialAnchors2025}. Finally, guest devices discover the shared anchor and align their Unity coordinate system to match the host's, ensuring the \texttt{Arena} and all game objects appear in the exact same physical location for everyone.
-
-\subsection{Data Collection}
-\label{sec:prototype-logging}
-A custom \texttt{MetricsLogger} component is included in the scene to capture real-time performance data, including network latency (RTT) to the local session host, instantaneous and average frame rate (FPS), and calibration error measured as the Euclidean distance between the local anchor position and the shared anchor position.
-This logging pipeline allows sampling at 1Hz to support long-duration evaluation without external instrumentation. Each headset writes a per-session CSV file containing: session identifier, headset identifier, participant count, timestamp, frame rate, network latency (RTT), calibration error, battery temperature, battery level, and runtime state (e.g., host/client/not connected). In addition, a JSON metadata file is generated per session to capture device and runtime context (device model/name, Unity/app version, start/end time, duration, and total samples). To reduce data loss during long runs, logs are periodically flushed to disk and also persisted on application pause/quit; an optional on-headset debug overlay provides live visibility of the same key metrics during testing.
->>>>>>> 32df077fa8bbb82b5374f4992fe0114abd8167f7
 
 
 \subsection{Meta Quest Device Setup and APK Deployment}

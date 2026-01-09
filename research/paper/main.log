@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.12.22)  9 JAN 2026 10:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.12.22)  9 JAN 2026 10:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/github/multi-user-vr/research/main.tex
-(c:/github/multi-user-vr/research/main.tex
+**c:/github/multi-user-vr/research/paper/main.tex
+(c:/github/multi-user-vr/research/paper/main.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-11-06>
 (C:\Users\jonfriis\AppData\Local\Programs\MiKTeX\tex/latex/ieeetran\IEEEtran.cls
@@ -240,24 +240,24 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 )) (C:\Users\jonfriis\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count307
-)
-No file main.aux.
+) (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
-LaTeX Font Info:    ... okay on input line 7.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
+LaTeX Font Info:    ... okay on input line 6.
+
 -- Lines per column: 56 (exact).
 (C:\Users\jonfriis\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -277,28 +277,178 @@ Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (C:\Users\jonfriis\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
-)) (titlepage.tex)
+)) (titlepage.tex) (abstract.tex) (keywords.tex) (introduction.tex
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 4.
+ (C:\Users\jonfriis\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 4.
+ (C:\Users\jonfriis\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
+ (C:\Users\jonfriis\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Trying to load font information for OML+ptm on input line 8.
+ (C:\Users\jonfriis\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omlptm.fd
+File: omlptm.fd 
+)
+LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 8.
 
-! LaTeX Error: File `abstract.tex' not found.
+Underfull \vbox (badness 1127) has occurred while \output is active []
 
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: tex)
+ [1{C:/Users/jonfriis/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
-Enter file name: 
-c:/github/multi-user-vr/research/main.tex:13: Emergency stop.
-<read *> 
-         
-l.13 \input{abstract}
-                     ^^M
-*** (cannot \read from terminal in nonstop modes)
 
- 
+]) (stateoftheart.tex) (approach.tex [2]) (prototype.tex
+<figures/architecture_diagram.png, id=16, 4312.11pt x 3442.8625pt>
+File: figures/architecture_diagram.png Graphic file (type png)
+<use figures/architecture_diagram.png>
+Package pdftex.def Info: figures/architecture_diagram.png  used on input line 14.
+(pdftex.def)             Requested size: 252.0pt x 201.15186pt.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 21.
+ (C:\Users\jonfriis\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+) [3 <./figures/architecture_diagram.png>]
+Underfull \hbox (badness 1515) in paragraph at lines 34--35
+ \OT1/ptm/m/it/10 2) Game-play Me-chan-ics: [][] \OT1/ptm/m/n/10 Play-ers col-lab-o-rate to shoot
+ []
+
+<figures/shared_space_model.png, id=23, 769.87625pt x 410.53375pt>
+File: figures/shared_space_model.png Graphic file (type png)
+<use figures/shared_space_model.png>
+Package pdftex.def Info: figures/shared_space_model.png  used on input line 44.
+(pdftex.def)             Requested size: 252.0pt x 134.38031pt.
+) (results.tex [4 <./figures/shared_space_model.png>]
+Overfull \hbox (7.48581pt too wide) in paragraph at lines 58--66
+ [][] 
+ []
+
+) (conclusion.tex [5]) (main.bbl
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+** WARNING: IEEEtran.bst: No hyphenation pattern has been
+** loaded for the language `eng'. Using the pattern for
+** the default language instead.
+
+Underfull \hbox (badness 10000) in paragraph at lines 76--80
+[]\OT1/ptm/m/n/8 ``Colocation dis-cov-ery,'' On-line. Avail-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 76--80
+\OT1/ptm/m/n/8 https://developers.meta.com/horizon/llmstxt/documentation/unity/unity-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--86
+[]\OT1/ptm/m/n/8 ``Shared spa-tial an-chors,'' On-line. Avail-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--86
+\OT1/ptm/m/n/8 https://developers.meta.com/horizon/llmstxt/documentation/unity/unity-
+ []
+
+[6]
+Underfull \hbox (badness 1490) in paragraph at lines 88--92
+[]\OT1/ptm/m/n/8 ``Get started with meta quest de-vel-oper hub,'' On-line. Avail-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--92
+\OT1/ptm/m/n/8 https://developers.meta.com/horizon/llmstxt/documentation/unity/ts-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 94--97
+[]\OT1/ptm/m/n/8 ``Photon fu-sion 2 doc-u-men-ta-tion,'' On-line. Avail-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 94--97
+\OT1/ptm/m/n/8 https://doc.photonengine.com/fusion/current/fusion-intro, 2025,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--103
+[]\OT1/ptm/m/n/8 ``Multiplayer build-ing blocks setup guide,'' On-line. Avail-able:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--103
+\OT1/ptm/m/n/8 https://developers.meta.com/horizon/llmstxt/documentation/unity/bb-
+ []
+
+) (contributions.tex)
+
+** Conference Paper **
+Before submitting the final camera ready copy, remember to:
+
+ 1. Manually equalize the lengths of two columns on the last page
+ of your paper;
+
+ 2. Ensure that any PostScript and/or PDF output post-processing
+ uses only Type 1 fonts and that every step in the generation
+ process uses the appropriate paper size.
+
+[7] (main.aux)
+ ***********
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-11-06>
+ ***********
+ ) 
 Here is how much of TeX's memory you used:
- 4176 strings out of 467871
- 66084 string characters out of 5416923
- 473826 words of memory out of 5000000
- 33048 multiletter control sequences out of 15000+600000
- 648791 words of font info for 80 fonts, out of 8000000 for 9000
+ 4469 strings out of 467871
+ 71946 string characters out of 5416923
+ 493765 words of memory out of 5000000
+ 33261 multiletter control sequences out of 15000+600000
+ 667790 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,8n,68p,271b,275s stack positions out of 10000i,1000n,20000p,200000b,200000s
-c:/github/multi-user-vr/research/main.tex:13:  ==> Fatal error occurred, no output PDF file produced!
+ 62i,9n,68p,1687b,275s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/jonfriis/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (7 pages, 439615 bytes).
+PDF statistics:
+ 92 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+
