@@ -1,22 +1,30 @@
 {
   "servers": {
-    "sequential-thinking": {
+    "HzOSDevMCP": {
+      "command": "C:\\Program Files\\Meta Quest Developer Hub\\resources\\bin\\hzos-dev-mcp.exe",
+      "args": [],
+      "env": {}
+    },
+    "memory": {
       "command": "npx",
       "args": [
         "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
+        "@modelcontextprotocol/server-memory"
       ]
     },
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "."],
-      "cwd": "${workspaceFolder}"
-    },
-    "Unity-MCP": {
-      "type": "stdio",
-      "command": "C:/github/multi-user-vr/vr/Library/mcp-server/win-x64/unity-mcp-server.exe",
       "args": [
-        "--port=8080",
+        "-y",
+        "@pimzino/spec-workflow-mcp@latest",
+        "C:\\github\\Drone-Arena"
+      ]
+    },
+    "ai-game-developer": {
+      "type": "stdio",
+      "command": "C:/github/unity-shooting-arena-co-location/Library/mcp-server/win-x64/unity-mcp-server.exe",
+      "args": [
+        "--port=56352",
         "--plugin-timeout=10000",
         "--client-transport=stdio"
       ]

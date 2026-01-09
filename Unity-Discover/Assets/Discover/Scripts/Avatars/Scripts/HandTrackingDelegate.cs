@@ -4,6 +4,7 @@
 
 #pragma warning disable IDE1006
 
+using Meta.XR.Samples;
 using Oculus.Avatar2;
 using Oculus.Interaction.Input;
 using UnityEngine;
@@ -11,6 +12,7 @@ using UnityEngine.Assertions;
 
 namespace Oculus.Interaction.AvatarIntegration
 {
+    [MetaCodeSample("Discover")]
     public class HandTrackingDelegate : IOvrAvatarHandTrackingDelegate
     {
         private Transform _root;
@@ -53,7 +55,11 @@ namespace Oculus.Interaction.AvatarIntegration
                 handData.wristPosRight = InteractionAvatarConversions.PoseToAvatarTransformFlipZ(wristPose.GetTransformedBy(worldToRootPose));
             }
             // joint rotations
-            var sourceOffset = 0; // Start from the first hand joint (thumb metacarpal)
+#if USING_XR_SDK_OPENXR
+            var sourceOffset = (int)HandJointId.HandThumb1;
+#else
+            var sourceOffset = (int)HandJointId.HandThumb0;
+#endif
             var destOffset = 0;
             CopyJointRotations(_leftHand, sourceOffset, handData.boneRotations, destOffset);
 

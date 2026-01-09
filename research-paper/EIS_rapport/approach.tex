@@ -1,0 +1,31 @@
+\section{Approach}
+
+This study investigates a co-located multi-user VR configuration using wireless headsets to address the gap between distributed VR collaboration systems and the requirements of shared physical training environments. The approach is intentionally scoped as a \emph{technical feasibility validation} of a consumer 3-user setup, rather than a learning-outcome study.
+
+\subsection{How the Approach Differs}
+Prior co-located systems commonly rely on external tracking infrastructure, such as multi-camera setups or manual calibration workflows, while multi-user networking studies frequently focus on two-user collaboration with controlled, simulated network conditions. Relative to these solution families, our approach integrates (i) \emph{anchor-based automated co-location} using inside-out tracked consumer headsets, (ii) \emph{local rendering with lightweight synchronization} over WiFi rather than server-rendered streaming architectures with throughput/latency requirements, and (iii) \emph{continuous on-device instrumentation} so performance and stability can be evaluated during long duration sessions.
+
+The approach is designed to be \emph{better for validating feasibility in practice} because it uses the same constraints a training deployment would face (standalone headsets, consumer WiFi, minimal setup time), while tying acceptance criteria to evidence-based thresholds from the literature: safe alignment accuracy for collision risk reduction~\cite{ReimerDennis2021CfSV} and collaboration-relevant RTT targets~\cite{VanDammeSam2024Iolo}. Finally, by standardizing multi-headset setup and APK deployment through Meta Quest Developer Hub (MQDH)\cite{MetaMQDHGettingStarted2025}, the workflow reduces per-device variance and supports repeatable iteration across all three headsets.
+
+While our prototype does not implement a dedicated spatial awareness UI like WIM, it emphasizes representation consistency: the same anchored scene content is rendered on each headset. Prior work has shown that mismatched spatial representations across users can reduce collaborative performance.~\cite{WeissYannick2025ItEo}.
+
+\subsection{Design Targets (Benchmarks)}
+The feasibility validation uses literature-derived targets as benchmark criteria:
+\begin{itemize}
+    \item \textbf{Collaboration latency}: Maintain $\leq 75$ms RTT as a target threshold for good collaborative QoE~\cite{VanDammeSam2024Iolo}.
+    \item \textbf{Co-location accuracy}: Keep calibration error below 10mm as a conservative, safety-relevant reference for collision prevention~\cite{ReimerDennis2021CfSV}.
+    \item \textbf{Visual performance}: Maintain stable rendering at the device target refresh rate (72Hz) to support comfort and consistent interaction.
+    \item \textbf{Operational stability}: Meet the above targets over extended continuous sessions (tens of minutes to $\sim$1.5 hours) without external instrumentation.
+\end{itemize}
+
+\subsection{System Overview}
+The experimental system consists of three Meta Quest 3 standalone headsets operating within a shared physical space and networked via WiFi. Co-location is established using Meta's OVR Colocation Discovery API\cite{MetaColocationDiscovery2025} with a shared spatial anchor\cite{MetaSharedSpatialAnchors2025}, while multi-user state synchronization is implemented using Photon Fusion 2\cite{PhotonFusionDocs,MetaMultiplayerBuildingBlocks2025}. Implementation details and the concrete Unity components are described in Section~\ref{sec:prototype-colocation} and in the \textit{Experimental Prototype} section.
+
+
+\subsection{Research Methodology}
+The prototype follows a technical demonstration approach to validate whether the integrated system meets the benchmarks in a realistic runtime proxy. Each headset logs key metrics at 1Hz (Section~\ref{sec:prototype-logging}), enabling longitudinal analysis of latency, frame rate, calibration error, and thermals without external measurement tools. Long-duration sessions (60+ minutes) are used to surface stability issues that short lab trials may miss, such as drift accumulation, network spikes, or thermal throttling.
+
+\subsection{Assumptions and Limitations}
+Several assumptions and limitations guide this study. Hardware constraints inherent to mobile processing necessitate trade-offs in visual fidelity to maintain target frame rates. Reliable WiFi connectivity is assumed, with measured RTT reflecting the quality of the local network and its contention. Finally, while co-location is established via shared anchors, the strongest safety claims require motion-robust evaluation; therefore, drift measurements under stationary conditions should be interpreted as a best-case baseline (with motion-robustness treated as future work).
+
+With the methodological framework and design constraints established, the following section details the specific implementation of the experimental testbed used to validate these parameters.
